@@ -74,7 +74,7 @@ def grab_notes(uid, lang):
                          f"{trans['remaining_time'][lang]}"
                          f"{get_time_from_sec(exp['remaining_time'], lang)}"))
 
-    return response
+    return res_text
 
 
 if __name__ == '__main__':
