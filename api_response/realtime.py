@@ -1,28 +1,5 @@
-import genshinstats as gs
-import requests
-from urllib.request import urlopen
-from pprint import pprint
-
-
-def set_cookie():
-    with open('cookie.txt') as cook:
-        ltoken = cook.readline().replace('\n', '')
-        ltuid = cook.readline().replace('\n', '')
-        gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
-
-
-def get_img_from_web(img):
-    resource = urlopen(img)
-    return resource.read()
-
-
-def get_time_from_sec(seconds, lang):
-    hours, ost = divmod(int(seconds), 3600)
-    sec, mins = divmod(ost, 60)
-    if lang == 'ru-ru':
-        return f'{hours}ч:{mins}м:{sec}с'
-    elif lang == 'en-us':
-        return f'{hours}h:{mins}m:{sec}s'
+from api_response.utils import gs
+from api_response.utils import get_img_from_web, get_time_from_sec
 
 
 def grab_notes(uid, lang):
@@ -78,7 +55,9 @@ def grab_notes(uid, lang):
 
 
 if __name__ == '__main__':
-    set_cookie()
+    from utils import set_cookie
+    from pprint import pprint
+
     uid = 705359736
     rus = 'ru-ru'
     eng = 'en-us'
