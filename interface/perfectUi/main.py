@@ -5,7 +5,7 @@ from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QSize, Qt, QThread, p
 from sys import argv
 from api_response import realtime
 from api_response.realtime import set_cookie as sc
-from ui_cookie_dialog import CookieDialog
+from interface.ui_cookie_dialog import CookieDialog
 import ui
 
 
