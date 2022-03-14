@@ -44,14 +44,40 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sidebarButton.sizePolicy().hasHeightForWidth())
         self.sidebarButton.setSizePolicy(sizePolicy)
-        self.sidebarButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/sidebar_button/resourse/menu.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.sidebarButton.setIcon(icon)
-        self.sidebarButton.setIconSize(QtCore.QSize(32, 32))
+        self.sidebarButton.setStyleSheet("QPushButton {\n"
+"                background-image: url(:/16x16/icons/16x16/cil-menu.png);\n"
+"                background-position: left center;\n"
+"                background-repeat: no-repeat;\n"
+"                border: none;\n"
+"                color: rgb(200, 200, 200);\n"
+"                border-left: 22px solid rgb(27, 29, 35);\n"
+"                background-color: rgb(27, 29, 35);\n"
+"                text-align: left;\n"
+"                padding-left: 45px;\n"
+"            }\n"
+"            QPushButton[Active=true] {\n"
+"                background-image: url(:/16x16/icons/16x16/cil-menu.png);\n"
+"                background-position: left center;\n"
+"                background-repeat: no-repeat;\n"
+"                border: none;\n"
+"                border-left: 22px solid rgb(27, 29, 35);\n"
+"                border-right: 45px solid rgb(44, 49, 60);\n"
+"                background-color: rgb(27, 29, 35);\n"
+"                text-align: left;\n"
+"                padding-left: 45px;\n"
+"            }\n"
+"            QPushButton:hover {\n"
+"                background-color: rgb(33, 37, 43);\n"
+"                border-left: 22px solid rgb(33, 37, 43);\n"
+"            }\n"
+"            QPushButton:pressed {\n"
+"                background-color: rgb(85, 170, 255);\n"
+"                border-left: 22px solid rgb(85, 170, 255);\n"
+"            }")
+        self.sidebarButton.setIconSize(QtCore.QSize(16, 16))
         self.sidebarButton.setObjectName("sidebarButton")
         self.verticalLayout_2.addWidget(self.sidebarButton)
-        self.verticalLayout.addWidget(self.frame, 0, QtCore.Qt.AlignLeft)
+        self.verticalLayout.addWidget(self.frame)
         self.frame_2 = QtWidgets.QFrame(self.sidebar_menu)
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -81,7 +107,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 911, 615))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 900, 615))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.scrollAreaLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.scrollAreaLayout.setObjectName("scrollAreaLayout")
@@ -109,4 +135,5 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.sidebarButton.setText(_translate("MainWindow", "Menu"))
 import resourses_rc

@@ -4,8 +4,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QSize, Qt, QThread, pyqtSignal
 from sys import argv
 from api_response import realtime
-from api_response.realtime import set_cookie as sc
 from interface.ui_cookie_dialog import CookieDialog
+from styles import style_bt_standard
 import ui
 
 
@@ -24,45 +24,10 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = ui.Ui_MainWindow()
         self.ui.setupUi(self)
-        ############
-        self.style_bt_standard = (
-            """
-            QPushButton {
-                background-image: ICON_REPLACE;
-                background-position: left center;
-                background-repeat: no-repeat;
-                border: none;
-                color: rgb(200, 200, 200);
-                border-left: 22px solid rgb(27, 29, 35);
-                background-color: rgb(27, 29, 35);
-                text-align: left;
-                padding-left: 45px;
-            }
-            QPushButton[Active=true] {
-                background-image: ICON_REPLACE;
-                background-position: left center;
-                background-repeat: no-repeat;
-                border: none;
-                border-left: 22px solid rgb(27, 29, 35);
-                border-right: 45px solid rgb(44, 49, 60);
-                background-color: rgb(27, 29, 35);
-                text-align: left;
-                padding-left: 45px;
-            }
-            QPushButton:hover {
-                background-color: rgb(33, 37, 43);
-                border-left: 22px solid rgb(33, 37, 43);
-            }
-            QPushButton:pressed {
-                background-color: rgb(85, 170, 255);
-                border-left: 22px solid rgb(85, 170, 255);
-            }
-            """
-        )
-        ############
+
         self.sidebar_animation = QPropertyAnimation(self.ui.sidebar_menu, b"minimumWidth")
 
-        self.ui.sidebarButton.setMinimumSize(QSize(60, 0))
+        self.ui.sidebarButton.setMinimumSize(QSize(0, 60))
         self.ui.sidebarButton.clicked.connect(lambda: self.toggle_menu(200))
 
         self.add_new_menu("HOME", "home_button", "url(:/16x16/icons/16x16/cil-code.png)")
@@ -76,8 +41,6 @@ class MainWindow(QMainWindow):
 
         self.cookie_dialog = CookieDialog()
         self.cookie_dialog.show()
-
-        sc()
 
     def buttons_events(self):
         button = self.sender()
@@ -119,42 +82,42 @@ class MainWindow(QMainWindow):
         button.setSizePolicy(size_policy3)
         button.setMinimumSize(QSize(0, 60))
         button.setLayoutDirection(Qt.LeftToRight)
-        button.setStyleSheet(self.style_bt_standard.replace('ICON_REPLACE', icon))
+        button.setStyleSheet(style_bt_standard.replace('ICON_REPLACE', icon))
         button.setText(name)
         button.setToolTip(name)
         button.clicked.connect(self.buttons_events)
         self.ui.verticalLayout_4.addWidget(button)
 
     def reset_style(self, widget):
-        for w in self.ui.sidebar_menu.findChildren(QPushButton):
-            if w.objectName() != widget and w.objectName() != "sidebarButton":
-                w.setStyleSheet(deselect_menu(w.styleSheet()))
+        for button in self.ui.sidebar_menu.findChildren(QPushButton):
+            if button.objectName() != widget and button.objectName() != "sidebarButton":
+                button.setStyleSheet(deselect_menu(button.styleSheet()))
 
     def add_wishes(self, notes):
         if len(self.ui.scrollAreaWidgetContents.children()) > 1:
             return
 
-        label = QLabel(self.ui.scrollAreaWidgetContents)
-        label.setObjectName('wishes_info')
-        label.setText("".join(i + "\n" for i in notes[:5]))
-        self.ui.scrollAreaLayout.addWidget(label)
+        expedition_info = QLabel(self.ui.scrollAreaWidgetContents)
+        expedition_info.setObjectName('wishes_info')
+        expedition_info.setText("".join(i + "\n" for i in notes[:5]))
+        self.ui.scrollAreaLayout.addWidget(expedition_info)
 
-        for i, n in enumerate(notes[5:]):
+        for i, note in enumerate(notes[5:]):
             frame = QFrame(self.ui.scrollAreaWidgetContents)
 
             pix = QPixmap()
-            pix.loadFromData(b"".join(n[:-1]))
-            temp = QLabel(frame)
-            temp.setObjectName(f"hero_pix_{i}")
-            temp.setPixmap(pix)
+            pix.loadFromData(b"".join(note[:-1]))
+            hero_pix = QLabel(frame)
+            hero_pix.setObjectName(f"hero_pix_{i}")
+            hero_pix.setPixmap(pix)
 
-            text = QLabel(frame)
-            text.setObjectName(f"heroes_time_{i}")
-            text.setText(n[-1])
+            expedition_time = QLabel(frame)
+            expedition_time.setObjectName(f"heroes_time_{i}")
+            expedition_time.setText(note[-1])
 
             v_layout = QHBoxLayout(frame)
-            v_layout.addWidget(temp)
-            v_layout.addWidget(text)
+            v_layout.addWidget(hero_pix)
+            v_layout.addWidget(expedition_time)
 
             self.ui.scrollAreaLayout.addWidget(frame)
             spacer_item = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -165,17 +128,17 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaWidgetContents.show()
 
     def update_wishes(self, notes):
-        label = self.ui.scrollAreaWidgetContents.findChild(QLabel, "wishes_info")
-        label.setText("".join(i + "\n" for i in notes[:5]))
+        expedition_info = self.ui.scrollAreaWidgetContents.findChild(QLabel, "wishes_info")
+        expedition_info.setText("".join(i + "\n" for i in notes[:5]))
 
-        for i, n in enumerate(notes[5:]):
+        for i, note in enumerate(notes[5:]):
             pix = QPixmap()
-            pix.loadFromData(b"".join(n[:-1]))
+            pix.loadFromData(b"".join(note[:-1]))
             hero_pix = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"hero_pix_{i}")
             hero_pix.setPixmap(pix)
 
-            text = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
-            text.setText(n[-1])
+            expedition_time = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
+            expedition_time.setText(note[-1])
 
 
 class LoadNotes(QThread):
