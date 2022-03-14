@@ -13,6 +13,7 @@ class CookieDialog(QDialog):
         self.setFixedSize(self.size().width(), self.size().height())
 
         self.ui.okButton.clicked.connect(self.save_cookie)
+        set_cookie(cookie_path)
 
     def save_cookie(self):
         with open(cookie_path, "w") as f:
