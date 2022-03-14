@@ -1,6 +1,7 @@
 import os
 from PyQt5.QtWidgets import QDialog
 from api_response import cookie_path
+from api_response import set_cookie
 from . import dialog
 
 
@@ -18,4 +19,5 @@ class CookieDialog(QDialog):
             f.write(self.ui.ltokenEdit.text() + "\n")
             f.write(self.ui.ltuidEdit.text() + "\n")
 
+        set_cookie(cookie_path)
         self.close()
