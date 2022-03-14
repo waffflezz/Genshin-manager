@@ -101,4 +101,3 @@ class Ui_Dialog(object):
         self.ltuidEdit.setPlaceholderText(_translate("Dialog", "Your ltuid"))
         self.okButton.setText(_translate("Dialog", "Ок"))
         self.faqButton.setText(_translate("Dialog", "Проблемы?"))
-import resourse.icons_rc

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>316</width>
+    <height>404</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Cookie</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/cookie_icon/mini_cookie.png</normaloff>:/cookie_icon/mini_cookie.png</iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">background: #C4C4C4;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLineEdit" name="ltokenEdit">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>53</x>
+        <y>70</y>
+        <width>210</width>
+        <height>56</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: #FFFFFF;
+border-radius: 6px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Normal</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+      <property name="placeholderText">
+       <string>Your ltoken</string>
+      </property>
+      <property name="cursorMoveStyle">
+       <enum>Qt::LogicalMoveStyle</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="ltuidEdit">
+      <property name="geometry">
+       <rect>
+        <x>53</x>
+        <y>149</y>
+        <width>210</width>
+        <height>53</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: #FFFFFF;
+border-radius: 6px;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>Your ltuid</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="okButton">
+      <property name="geometry">
+       <rect>
+        <x>101</x>
+        <y>286</y>
+        <width>114</width>
+        <height>34</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+border: 0;
+background: #FFFDFD;
+border-radius: 6px;
+}
+
+QPushButton:hover {
+	
+	background-color: rgb(37, 128, 188);
+}
+
+QPushButton:pressed {
+    
+	background-color: rgb(45, 174, 221);
+}</string>
+      </property>
+      <property name="text">
+       <string>Ок</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="faqButton">
+      <property name="geometry">
+       <rect>
+        <x>185</x>
+        <y>211</y>
+        <width>103</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 0px;
+color: #FFFFFF;</string>
+      </property>
+      <property name="text">
+       <string>Проблемы?</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="resourse/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
