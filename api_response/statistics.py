@@ -1,6 +1,5 @@
 import os
 
-
 from api_response.utils import gs
 from pprint import pprint
 
@@ -20,10 +19,14 @@ class StatisticsGetter:
         td = {'resin': self.resin, 'primos': self.primos}
         page = []
         for i in range(amount):
-            if is_uid:
-                page.append(filtrate_dict(next(td[type]), 'amount', 'reason', 'time', 'uid'))
-            else:
-                page.append(filtrate_dict(next(td[type]), 'amount', 'reason', 'time'))
+            try:
+                if is_uid:
+                    page.append(filtrate_dict(next(td[type]), 'amount', 'reason', 'time', 'uid'))
+                else:
+                    page.append(filtrate_dict(next(td[type]), 'amount', 'reason', 'time'))
+            except StopIteration as e:
+                break
+
         return page
 
 
