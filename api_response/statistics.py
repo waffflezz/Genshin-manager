@@ -1,7 +1,5 @@
 import os
 
-import datetime
-import sqlite3
 
 from api_response.utils import gs
 from pprint import pprint
