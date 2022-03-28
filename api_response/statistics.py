@@ -15,15 +15,15 @@ class StatisticsGetter:
         self.primos = gs.get_primogem_log(lang=lang)
         self.resin = gs.get_resin_log(lang=lang)
 
-    def get_next_page(self, type, amount=8, is_uid=False):
+    def get_next_page(self, stat_type, amount=8, is_uid=False):
         td = {'resin': self.resin, 'primos': self.primos}
         page = []
         for i in range(amount):
             try:
                 if is_uid:
-                    page.append(filtrate_dict(next(td[type]), 'amount', 'reason', 'time', 'uid'))
+                    page.append(filtrate_dict(next(td[stat_type]), 'amount', 'reason', 'time', 'uid'))
                 else:
-                    page.append(filtrate_dict(next(td[type]), 'amount', 'reason', 'time'))
+                    page.append(filtrate_dict(next(td[stat_type]), 'amount', 'reason', 'time'))
             except StopIteration as e:
                 break
 
