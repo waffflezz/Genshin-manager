@@ -31,13 +31,19 @@ class MainWindow(QMainWindow):
         self.ui.sidebarButton.clicked.connect(lambda: self.toggle_menu(200))
 
         self.add_new_menu("HOME", "home_button", "url(:/16x16/icons/16x16/cil-code.png)")
-        self.add_new_menu("SAMOLET", "samolet_button", "url(:/16x16/icons/16x16/cil-airplane-mode.png)")
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.page)
 
         self.test = LoadNotes()
         self.test.signal.connect(self.add_wishes)
         self.test.signal.connect(self.update_wishes)
+        self.test.load_signal.connect(self.loading)
+
+        self.load_label = QLabel(self.ui.mainbody)
+        self.load_label.setText("Загрузка")
+        self.load_label.setObjectName("load_label")
+        self.ui.verticalLayout_3.addWidget(self.load_label)
+        self.load_label.hide()
 
         self.cookie_dialog = CookieDialog()
         self.cookie_dialog.show()
@@ -51,10 +57,6 @@ class MainWindow(QMainWindow):
             button.setStyleSheet(select_menu(button.styleSheet()))
 
             self.test.start()
-        if button.objectName() == "samolet_button":
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_2)
-            self.reset_style("samolet_button")
-            button.setStyleSheet(select_menu(button.styleSheet()))
 
     def toggle_menu(self, max_width):
         width = self.ui.sidebar_menu.width()
@@ -96,6 +98,12 @@ class MainWindow(QMainWindow):
     def add_wishes(self, notes):
         if len(self.ui.scrollAreaWidgetContents.children()) > 1:
             return
+
+        update_button = QPushButton(self.ui.scrollAreaWidgetContents)
+        update_button.setObjectName("update_button")
+        update_button.setText("Обновить")
+        update_button.clicked.connect(self.test.start)
+        self.ui.scrollAreaLayout.addWidget(update_button)
 
         expedition_info = QLabel(self.ui.scrollAreaWidgetContents)
         expedition_info.setObjectName('wishes_info')
@@ -140,18 +148,27 @@ class MainWindow(QMainWindow):
             expedition_time = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
             expedition_time.setText(note[-1])
 
+    def loading(self, is_load):
+        if is_load:
+            self.load_label.show()
+        else:
+            self.load_label.hide()
+
 
 class LoadNotes(QThread):
     signal = pyqtSignal(list)
+    load_signal = pyqtSignal(bool)
 
     def __init__(self, parent=None):
         super().__init__()
 
     def run(self):
+        self.load_signal.emit(True)
         uid = 705359736
         rus = 'ru-ru'
         notes = realtime.grab_notes(uid, rus)
         self.signal.emit(notes)
+        self.load_signal.emit(False)
 
 
 if __name__ == '__main__':
