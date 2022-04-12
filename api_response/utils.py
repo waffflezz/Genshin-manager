@@ -11,7 +11,7 @@ def set_cookie(path):
         gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
 
 
-def is_coockie():
+def is_cookie():
     try:
         gs.fetch_endpoint('')
     except gs.errors.NotLoggedIn:
