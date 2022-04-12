@@ -1,7 +1,8 @@
 from api_response.utils import gs
-from api_response.utils import get_img_from_web, get_time_from_sec
+from api_response.utils import get_img_from_web, get_time_from_sec, test_workable
 
 
+@test_workable
 def grab_notes(uid, lang):
     trans = {'completed_commissions': {'ru-ru': 'Сделано дейликов: ',
                                        'en-us': 'Completed commissions: '},
@@ -57,8 +58,9 @@ def grab_notes(uid, lang):
 if __name__ == '__main__':
     from utils import set_cookie
     from pprint import pprint
-
+    set_cookie('cookie.txt')
     uid = 705359736
     rus = 'ru-ru'
     eng = 'en-us'
     pprint(grab_notes(uid, eng))
+

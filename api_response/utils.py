@@ -22,3 +22,18 @@ def get_time_from_sec(seconds, lang):
         return f'{hours}ч:{mins}м:{sec}с'
     elif lang == 'en-us':
         return f'{hours}h:{mins}m:{sec}s'
+
+
+def filtrate_dict(dictt, *keys):
+    return {key: str(dictt[key]) for key in keys}
+
+
+def test_workable(func):
+    def wrapper(*args, **kwargs):
+        try:
+            res = func(*args, **kwargs)
+        except Exception as e:
+            return e
+        return res
+
+    return wrapper
