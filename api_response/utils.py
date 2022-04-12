@@ -1,6 +1,7 @@
 import genshinstats as gs
 
 from urllib.request import urlopen
+from requests.exceptions import HTTPError
 
 
 def set_cookie(path):
@@ -8,6 +9,16 @@ def set_cookie(path):
         ltoken = cook.readline().replace('\n', '')
         ltuid = cook.readline().replace('\n', '')
         gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
+
+
+def is_coockie():
+    try:
+        gs.fetch_endpoint('')
+    except gs.errors.NotLoggedIn:
+        return False
+    except HTTPError:
+        return True
+    return 'Произошла неведомая хрень'
 
 
 def get_img_from_web(img):
@@ -37,3 +48,4 @@ def test_workable(func):
         return res
 
     return wrapper
+
