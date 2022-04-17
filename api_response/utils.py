@@ -13,12 +13,10 @@ def set_cookie(path):
 
 def is_cookie():
     try:
-        gs.fetch_endpoint('')
+        gs.claim_daily_reward()
     except gs.errors.NotLoggedIn:
         return False
-    except HTTPError:
-        return True
-    return 'Произошла неведомая хрень'
+    return True
 
 
 def get_img_from_web(img):
@@ -48,4 +46,6 @@ def test_workable(func):
         return res
 
     return wrapper
+
+
 
