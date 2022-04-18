@@ -1,7 +1,6 @@
 import genshinstats as gs
 
 from urllib.request import urlopen
-from requests.exceptions import HTTPError
 
 
 def set_cookie(path):
@@ -48,4 +47,6 @@ def test_workable(func):
     return wrapper
 
 
-
+if __name__ == '__main__':
+    set_cookie('cookie.txt')
+    print(is_cookie())
