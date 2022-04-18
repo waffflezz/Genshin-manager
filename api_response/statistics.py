@@ -11,6 +11,7 @@ dbpath = f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_man
 
 class StatisticsGetter:
     def __init__(self, lang):
+        self.lang = lang
         self.primos = gs.get_primogem_log(lang=lang)
         self.resin = gs.get_resin_log(lang=lang)
         self.dailys = gs.get_claimed_rewards()
@@ -42,13 +43,21 @@ class StatisticsGetter:
             page.append({'name': elem['name'], 'count': elem['cnt'], 'date': elem['created_at'], 'img': elem['img']})
         return page
 
+    def update_iterators(self):
+        self.primos = gs.get_primogem_log(lang=self.lang)
+        self.resin = gs.get_resin_log(lang=self.lang)
+        self.dailys = gs.get_claimed_rewards()
+
 
 if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie('cookie.txt')
     stats = StatisticsGetter('ru-ru')
-    pprint(stats.get_dailys_page(amount=8))
+    pprint(stats.get_dailys_page(amount=2))
+    stats.update_iterators()
+    print()
+    pprint(stats.get_dailys_page(amount=2))
     # pprint(stats.get_next_page('primos', amount=10, is_uid=True))
 
 # while True:
