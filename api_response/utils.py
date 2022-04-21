@@ -40,6 +40,13 @@ def filtrate_dict(dictt, *keys):
     return {key: str(dictt[key]) for key in keys}
 
 
+def to_dict(arr, *keys):
+    res = {}
+    for key, val in zip(keys, arr):
+        res[key] = val
+    return res
+
+
 def test_workable(func):
     def wrapper(*args, **kwargs):
         try:
@@ -52,5 +59,8 @@ def test_workable(func):
 
 
 if __name__ == '__main__':
-    set_cookie('cookie.txt')
-    print(is_cookie())
+    # set_cookie('cookie.txt')
+    print(to_dict(('Расходные материалы для алхимии',
+             '-40',
+             '2022-04-19 17:49:27',
+             '705359736'), 'name', 'amount', 'time', 'uid'))

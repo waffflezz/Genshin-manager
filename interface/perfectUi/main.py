@@ -250,6 +250,11 @@ class MainWindow(QMainWindow):
         else:
             self.statusBar().clearMessage()
 
+    def closeEvent(self, event) -> None:
+        self.stats.conn.close()
+        print('Приложение закрыто бд закрыто')
+        event.accept()
+
 
 class LoadNotes(QThread):
     signal = pyqtSignal(list)
@@ -272,4 +277,5 @@ if __name__ == '__main__':
     ex = MainWindow()
     ex.show()
     app.exec_()
+
     exit()
