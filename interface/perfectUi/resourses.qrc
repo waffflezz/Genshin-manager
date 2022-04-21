@@ -2,6 +2,9 @@
   <qresource prefix="sidebar_button">
     <file>resourse/menu.png</file>
   </qresource>
+  <qresource prefix="logo">
+    <file>icons/logo.png</file>
+  </qresource>
   <qresource prefix="16x16">
     <file>icons/16x16/cil-menu.png</file>
     <file>icons/16x16/cil-airplane-mode.png</file>

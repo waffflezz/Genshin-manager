@@ -89,6 +89,15 @@ class Ui_Dialog(object):
         self.faqButton.setStyleSheet("border: 0px;\n"
 "color: #FFFFFF;")
         self.faqButton.setObjectName("faqButton")
+        self.label = QtWidgets.QLabel(self.frame)
+        self.label.setGeometry(QtCore.QRect(50, 240, 221, 31))
+        font = QtGui.QFont()
+        font.setFamily("Cascadia Mono")
+        font.setPointSize(10)
+        self.label.setFont(font)
+        self.label.setStyleSheet("color: rgb(255, 88, 91);")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.frame)
 
         self.retranslateUi(Dialog)
@@ -101,3 +110,5 @@ class Ui_Dialog(object):
         self.ltuidEdit.setPlaceholderText(_translate("Dialog", "Your ltuid"))
         self.okButton.setText(_translate("Dialog", "Ок"))
         self.faqButton.setText(_translate("Dialog", "Проблемы?"))
+        self.label.setText(_translate("Dialog", "Проверьте введенные данные"))
+#import icons_rc
