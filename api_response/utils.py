@@ -1,6 +1,9 @@
+import os
 import genshinstats as gs
 
 from urllib.request import urlopen
+
+cookie_path = os.path.dirname(os.path.abspath(__file__)) + r'\cookie.txt'
 
 
 def set_cookie(path):
@@ -11,6 +14,7 @@ def set_cookie(path):
 
 
 def is_cookie():
+    set_cookie(cookie_path)
     try:
         gs.claim_daily_reward()
     except gs.errors.NotLoggedIn:

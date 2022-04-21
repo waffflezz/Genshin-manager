@@ -4,7 +4,7 @@ import genshinstats.errors
 
 from api_response.utils import gs
 from pprint import pprint
-from utils import test_workable, filtrate_dict, get_img_from_web
+from api_response.utils import test_workable, filtrate_dict, get_img_from_web
 
 dbpath = f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\databases\\'
 
