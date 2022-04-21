@@ -1,9 +1,21 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QSizePolicy, QLabel, QFrame
-from PyQt5.QtWidgets import QHBoxLayout, QSpacerItem
+from PyQt5.QtWidgets import (
+    QMainWindow, QApplication, QPushButton,
+    QSizePolicy, QLabel, QFrame,
+    QHBoxLayout, QSpacerItem
+)
+from PyQt5.QtCore import (
+    QPropertyAnimation, QEasingCurve, QSize,
+    Qt, QThread, pyqtSignal
+)
+
+from models import PrimosModel
+from widgets import TestDelegate, DailsDelegate
+from error_widget import ErrorMessage
+from threads import LoadPrimos, LoadResin, LoadDails
+
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QSize, Qt, QThread, pyqtSignal
 from sys import argv
-from api_response import realtime, statistics
+from api_response import realtime, statistics, is_cookie, cookie_path
 from interface.ui_cookie_dialog import CookieDialog
 from styles import style_bt_standard
 import ui
@@ -25,14 +37,20 @@ class MainWindow(QMainWindow):
         self.ui = ui.Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.err_message = ErrorMessage()
+
         self.sidebar_animation = QPropertyAnimation(self.ui.sidebar_menu, b"minimumWidth")
 
         self.ui.sidebarButton.setMinimumSize(QSize(0, 60))
         self.ui.sidebarButton.clicked.connect(lambda: self.toggle_menu(200))
 
+        self.add_new_menu("MAIN MENU", "main_menu", "url(:/16x16/icons/16x16/cil-code.png)")
         self.add_new_menu("TRAVELER'S\nDIARIES", "exp_button", "url(:/16x16/icons/16x16/cil-code.png)")
         self.add_new_menu("PRIMOS\nSTATS", "primos_button", "url(:/16x16/icons/16x16/cil-code.png)")
         self.add_new_menu("RESIN\nSTATS", "resin_button", "url(:/16x16/icons/16x16/cil-code.png)")
+
+        self.ui.settingsButton.clicked.connect(self.buttons_events)
+        self.ui.saveButton.clicked.connect(self.buttons_events)
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.page)
 
@@ -43,49 +61,53 @@ class MainWindow(QMainWindow):
 
         self.stats = statistics.StatisticsGetter("ru-ru")
 
+        # Создаю модель и делегат для примогемов
+        self.primos_model = PrimosModel(self.ui.primos_view)
+        self.primos_model.err_signal.connect(self.err_message.show_message)
+        self.test_delegate = TestDelegate(self.ui.primos_view)
+
+        # Создаю модель и делегат для резины
+        self.resin_model = PrimosModel(self.ui.resins_view)
+        self.resin_model.err_signal.connect(self.err_message.show_message)
+        self.resin_delegate = TestDelegate(self.ui.resins_view)
+
+        # Создаю модель и делегат для ежедневных штук
+        self.daily_model = PrimosModel(self.ui.dails_view)
+        self.daily_model.err_signal.connect(self.err_message.show_message)
+        self.daily_delegate = DailsDelegate(self.ui.dails_view)
+
+        # Подключаю к вьюшке примогемы
+        self.ui.primos_view.setModel(self.primos_model)
+        self.ui.primos_view.setItemDelegate(self.test_delegate)
+
+        # Подключаю к вьюшке резину
+        self.ui.resins_view.setModel(self.resin_model)
+        self.ui.resins_view.setItemDelegate(self.resin_delegate)
+
+        # Подключаю к вьюшке еждневные штуки
+        self.ui.dails_view.setModel(self.daily_model)
+        self.ui.dails_view.setItemDelegate(self.daily_delegate)
+
         self.primos = LoadPrimos(self.stats)
-        self.primos.signal.connect(self.add_primos)
+        self.primos.signal.connect(self.primos_model.add_primos)
         self.primos.load_signal.connect(self.loading)
 
         self.resin = LoadResin(self.stats)
-        self.resin.signal.connect(self.add_resins)
+        self.resin.signal.connect(self.resin_model.add_primos)
         self.resin.load_signal.connect(self.loading)
 
-        self.load_label = QLabel(self.ui.mainbody)
-        self.load_label.setText("Загрузка")
-        self.load_label.setObjectName("load_label")
-        self.ui.verticalLayout_3.addWidget(self.load_label)
-        self.load_label.hide()
+        self.dails = LoadDails(self.stats)
+        self.dails.signal.connect(self.daily_model.add_primos)
+        self.dails.load_signal.connect(self.loading)
+
+        self.ui.settingsWarning.hide()
 
         self.cookie_dialog = CookieDialog()
-        self.cookie_dialog.show()
+        if is_cookie() is False:
+            self.cookie_dialog.show()
 
-    # repeat code, fix it in future
-    def add_primos(self, primos):
-        for prim in primos:
-            primos_info = QLabel(self.ui.scrollAreaWidgetContents_2)
-            primos_text = ""
-            for key, value in prim.items():
-                primos_text += f"{key}: {value}\n"
-
-            primos_info.setText(primos_text)
-
-            self.ui.verticalLayout_8.addWidget(primos_info)
-
-        self.ui.scrollAreaWidgetContents_2.show()
-
-    def add_resins(self, resins):
-        for resin in resins:
-            resin_info = QLabel(self.ui.scrollAreaWidgetContents_3)
-            resin_text = ""
-            for key, value in resin.items():
-                resin_text += f"{key}: {value}\n"
-
-            resin_info.setText(resin_text)
-
-            self.ui.verticalLayout_9.addWidget(resin_info)
-
-        self.ui.scrollAreaWidgetContents_3.show()
+        self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
+        self.dails.start()
 
     def buttons_events(self):
         button = self.sender()
@@ -95,7 +117,16 @@ class MainWindow(QMainWindow):
             self.reset_style("exp_button")
             button.setStyleSheet(select_menu(button.styleSheet()))
 
+            if is_cookie() is False:
+                self.cookie_dialog.show()
+                return
             self.notes.start()
+        elif button.objectName() == "main_menu":
+            self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
+            self.reset_style("main_menu")
+            button.setStyleSheet(select_menu(button.styleSheet()))
+
+            self.dails.start()
         elif button.objectName() == "primos_button":
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_2)
             self.reset_style("primos_button")
@@ -108,6 +139,17 @@ class MainWindow(QMainWindow):
             button.setStyleSheet(select_menu(button.styleSheet()))
 
             self.resin.start()
+        elif button.objectName() == "settingsButton":
+            self.ui.stackedWidget.setCurrentWidget(self.ui.settings_page)
+            self.reset_style("settingsButton")
+            button.setStyleSheet(select_menu(button.styleSheet()))
+        elif button.objectName() == "saveButton":
+            with open(cookie_path, "w") as f:
+                f.write(self.ui.ltoken.text() + "\n")
+                f.write(self.ui.ltuid.text() + "\n")
+
+            if not self.ui.ltoken.text() or not self.ui.ltuid.text() or is_cookie() is False:
+                self.ui.settingsWarning.show()
 
     def toggle_menu(self, max_width):
         width = self.ui.sidebar_menu.width()
@@ -146,6 +188,8 @@ class MainWindow(QMainWindow):
             if button.objectName() != widget and button.objectName() != "sidebarButton":
                 button.setStyleSheet(deselect_menu(button.styleSheet()))
 
+    # TODO: передлать в модель с методом прогрузки в методе
+    # TODO: добавить окошко с кнопкой, в который вводится uid и печатаются герои в экспедиции
     def add_wishes(self, notes):
         if len(self.ui.scrollAreaWidgetContents.children()) > 1:
             return
@@ -186,6 +230,7 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaLayout.addItem(spacer_item)
         self.ui.scrollAreaWidgetContents.show()
 
+    # TODO: сделать отдельным методом в моделе вишесев
     def update_wishes(self, notes):
         expedition_info = self.ui.scrollAreaWidgetContents.findChild(QLabel, "wishes_info")
         expedition_info.setText("".join(i + "\n" for i in notes[:5]))
@@ -199,12 +244,11 @@ class MainWindow(QMainWindow):
             expedition_time = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
             expedition_time.setText(note[-1])
 
-    # QStatusBar
     def loading(self, is_load):
         if is_load:
-            self.load_label.show()
+            self.statusBar().showMessage("LOADING")
         else:
-            self.load_label.hide()
+            self.statusBar().clearMessage()
 
 
 class LoadNotes(QThread):
@@ -220,38 +264,6 @@ class LoadNotes(QThread):
         rus = 'ru-ru'
         notes = realtime.grab_notes(uid, rus)
         self.signal.emit(notes)
-        self.load_signal.emit(False)
-
-
-class LoadPrimos(QThread):
-    signal = pyqtSignal(object)
-    load_signal = pyqtSignal(bool)
-
-    def __init__(self, stats, parent=None):
-        super().__init__()
-        self.stats = stats
-
-    def run(self):
-        self.load_signal.emit(True)
-
-        self.signal.emit(self.stats.get_next_page('primos'))
-
-        self.load_signal.emit(False)
-
-
-class LoadResin(QThread):
-    signal = pyqtSignal(object)
-    load_signal = pyqtSignal(bool)
-
-    def __init__(self, stats, parent=None):
-        super().__init__()
-        self.stats = stats
-
-    def run(self):
-        self.load_signal.emit(True)
-
-        self.signal.emit(self.stats.get_next_page('resin'))
-
         self.load_signal.emit(False)
 
 
