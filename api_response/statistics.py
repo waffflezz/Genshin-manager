@@ -31,7 +31,8 @@ class StatisticsGetter:
     def get_dailys_page(self, is_pic=True):
         page = list(map(lambda x: to_dict(x[1:], 'name', 'count', 'date', 'img'), next(self.dailys)))
         if is_pic:
-            page = list(map(lambda x: get_img_from_web(x['img']), page))
+            for rew in page:
+                rew['img'] = get_img_from_web(rew['img'])
         return page
 
     @test_workable
@@ -86,5 +87,6 @@ if __name__ == '__main__':
     set_cookie('cookie.txt')
     stats = StatisticsGetter('ru-ru')
     pprint(stats.get_dailys_page())
+    # pprint(stats.get_next_page('resin'))
 
     stats.conn.close()
