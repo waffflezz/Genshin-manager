@@ -1,8 +1,9 @@
 import os
 
+from datetime import datetime
 from api_response.utils import gs
 from pprint import pprint
-from api_response.utils import test_workable, filtrate_dict, get_img_from_web, to_dict
+from api_response.utils import test_workable, filtrate_dict, get_img_from_web, to_dict, str_to_datetime
 from api_response.db_worker import DBaser
 from sqlite3 import IntegrityError
 
@@ -19,6 +20,7 @@ class StatisticsGetter:
         self.primos = self.baser.stat_page('primagems', self.cur)
         self.resin = self.baser.stat_page('resin', self.cur)
         self.dailys = self.baser.daily_page(self.cur)
+        self.arts = self.baser.art_page(self.cur)
 
     @test_workable
     def get_next_page(self, stat_type, is_uid=False):
@@ -26,6 +28,12 @@ class StatisticsGetter:
         return [to_dict(line[1:], 'reason', 'amount', 'time', 'uid') if is_uid else
                 to_dict(line[1:], 'reason', 'amount', 'time')
                 for line in next(td[stat_type])]
+
+    @test_workable
+    def get_arts_page(self, is_uid=False):
+        return [to_dict(line[1:], 'name', 'rarity', 'reason', 'time', 'uid') if is_uid else
+                to_dict(line[1:], 'name', 'rarity', 'reason', 'time')
+                for line in next(self.arts)]
 
     @test_workable
     def get_dailys_page(self, is_pic=True):
@@ -59,6 +67,24 @@ class StatisticsGetter:
         return f'{reason} db updated, added {counter} lines'
 
     @test_workable
+    def arts_db_update(self):
+        arts = gs.get_artifact_log(lang=self.lang)
+        counter = 0
+        for field in arts:
+            try:
+                self.baser.add_art_line(self.cur,
+                                        list(filtrate_dict(field,
+                                                           'id', 'name',
+                                                           'rarity', 'reason',
+                                                           'time', 'uid').values()))
+            except IntegrityError:
+                break
+            counter += 1
+            # break
+        self.conn.commit()
+        return f'artifacts db updated, added {counter} lines'
+
+    @test_workable
     def daily_db_update(self):
         stat = gs.get_claimed_rewards()
         counter = 0
@@ -76,17 +102,46 @@ class StatisticsGetter:
         return f'dailys db updated, added {counter} lines'
 
     def update_dbs(self):
-        self.stat_db_update('primagems')
-        self.stat_db_update('resin')
-        self.daily_db_update()
+        updates = [self.stat_db_update('primagems'),
+                   self.stat_db_update('resin'),
+                   self.arts_db_update(),
+                   self.daily_db_update()]
+        return updates
+
+    def __del__(self):
+        # self.conn.commit()
+        self.conn.close()
+
+
+class StatisticsAnalyzer:
+    def __init__(self, db_storage=f'C:\\Users\\{os.environ.get("USERNAME")}'
+                                  f'\\PycharmProjects\\Genshin_manager\\databases\\'):
+        self.storage = db_storage
+        self.baser = DBaser(self.storage)
+        self.conn, self.cur = self.baser.get_connection('stats')
+
+    def get_primos_per_month(self):
+        self.cur.execute("""SELECT time from primagems ORDER BY trans_id DESC;""")
+        months = {d: 0 for d in sorted(
+            list(set(map(lambda x: tuple(map(int, x[0].split(' ')[0][:7].split('-'))), self.cur.fetchall()))))}
+        self.cur.execute("""SELECT * from primagems
+                            ORDER BY trans_id;""")
+        while True:
+            next_line = self.cur.fetchone()
+            if next_line is None:
+                break
+            line = to_dict(next_line[1:], 'reason', 'amount', 'time', 'uid')
+            line['time'] = str_to_datetime(line['time'])
+            if (amount := line['amount']) > 0:
+                months[(line['time'].year, line['time'].month)] += amount
+        return months
 
 
 if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie('cookie.txt')
-    stats = StatisticsGetter('ru-ru')
-    pprint(stats.get_dailys_page())
-    # pprint(stats.get_next_page('resin'))
+    # stats = StatisticsGetter('ru-ru')
+    analyzer = StatisticsAnalyzer()
 
-    stats.conn.close()
+    print(analyzer.get_primos_per_month())

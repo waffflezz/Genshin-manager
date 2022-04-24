@@ -41,6 +41,15 @@ class DBaser:
                            img TEXT
                            );
                         """)
+        cur.execute("""CREATE TABLE IF NOT EXISTS artifacts(
+                           id INT PRIMARY KEY,
+                           name TEXT,
+                           rarity INTEGER,
+                           reason TEXT,
+                           time TEXT,
+                           uid INTEGER
+                           );
+                        """)
         conn.commit()
 
     def make_wishes_base(self):
@@ -58,15 +67,23 @@ class DBaser:
                     """)
         conn.commit()
 
-    def add_stat_line(self, stat, cur, values):
+    @staticmethod
+    def add_stat_line(stat, cur, values):
         cur.execute(f"""INSERT INTO {stat}(amount, trans_id, reason, time, uid) 
            VALUES({str(values).replace('[', '').replace(']', '')});""")
 
-    def add_daily_line(self, cur, values):
+    @staticmethod
+    def add_art_line(cur, values):
+        cur.execute(f"""INSERT INTO artifacts(id, name, rarity, reason, time, uid) 
+               VALUES({str(values).replace('[', '').replace(']', '')});""")
+
+    @staticmethod
+    def add_daily_line(cur, values):
         cur.execute(f"""INSERT INTO dailys(amount, time, img, name, id) 
                    VALUES({str(values).replace('[', '').replace(']', '')});""")
 
-    def get_stat_page(self, stat, cur, start=None, amount=8):
+    @staticmethod
+    def get_stat_page(stat, cur, start=None, amount=8):
         if start:
             cur.execute(f"""SELECT * FROM {stat} {'WHERE trans_id <= ' + start if start else ''}
                             ORDER BY trans_id DESC;""")
@@ -75,7 +92,8 @@ class DBaser:
                             ORDER BY trans_id DESC;""")
         return cur.fetchmany(amount)
 
-    def stat_page(self, stat, cur, amount=8):
+    @staticmethod
+    def stat_page(stat, cur, amount=8):
         start = None
         while True:
             cur.execute(f"""SELECT * FROM {stat} {'WHERE trans_id < ' + start if start else ''}
@@ -86,7 +104,20 @@ class DBaser:
             yield res
             start = str(res[-1][0])
 
-    def daily_page(self, cur, amount=8):
+    @staticmethod
+    def art_page(cur, amount=8):
+        start = None
+        while True:
+            cur.execute(f"""SELECT * FROM artifacts {'WHERE id < ' + start if start else ''}
+                                                    ORDER BY id DESC;""")
+            res = cur.fetchmany(amount)
+            if not res:
+                raise StopIteration
+            yield res
+            start = str(res[-1][0])
+
+    @staticmethod
+    def daily_page(cur, amount=8):
         start = None
         while True:
             cur.execute(f"""SELECT * FROM dailys {'WHERE id < ' + start if start else ''}
@@ -100,8 +131,10 @@ class DBaser:
 
 if __name__ == '__main__':
     baser = DBaser(f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\databases\\')
-    conn, cur = baser.get_connection('stats')
-    aboba = baser.daily_page(cur)
-    pprint(next(aboba))
-    pprint(next(aboba))
-    pprint(next(aboba))
+    baser.make_statistics_base()
+    # baser.make_wishes_base()
+    # conn, cur = baser.get_connection('stats')
+    # aboba = baser.daily_page(cur)
+    # pprint(next(aboba))
+    # pprint(next(aboba))
+    # pprint(next(aboba))

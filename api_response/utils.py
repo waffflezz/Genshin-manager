@@ -1,4 +1,8 @@
 import os
+import traceback
+
+from datetime import datetime
+from pprint import pprint
 import genshinstats as gs
 
 from urllib.request import urlopen
@@ -11,6 +15,13 @@ def set_cookie(path):
         ltoken = cook.readline().replace('\n', '')
         ltuid = cook.readline().replace('\n', '')
         gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
+
+
+def get_active_uids():
+    accs = sorted(list(map(lambda y: filtrate_dict(y, 'level', 'nickname', 'server', 'uid'),
+                           filter(lambda x: x['nickname'] != '玩家' + str(x['uid']), gs.get_game_accounts()))),
+                  key=lambda x: int(x['level']), reverse=True)
+    return accs
 
 
 def is_cookie():
@@ -52,15 +63,21 @@ def test_workable(func):
         try:
             res = func(*args, **kwargs)
         except Exception as e:
-            return e
+            stack = traceback.extract_stack()
+            return f'{stack} -> {e}'
         return res
 
     return wrapper
 
 
+def str_to_datetime(string:str):
+    date, time = string.split(' ')
+    date = list(map(int, date.split('-')))
+    time = list(map(int, time.split(':')))
+    return datetime(*date, *time)
+
+
 if __name__ == '__main__':
-    # set_cookie('cookie.txt')
-    print(to_dict(('Расходные материалы для алхимии',
-             '-40',
-             '2022-04-19 17:49:27',
-             '705359736'), 'name', 'amount', 'time', 'uid'))
+    set_cookie('cookie.txt')
+    # pprint(get_active_uids())
+    # next(gs.get_primogem_log())
