@@ -32,6 +32,12 @@ def is_cookie():
         return False
     return True
 
+def is_authkey():
+    try:
+        next(gs.get_primogem_log())
+    except gs.AuthkeyError or gs.AuthkeyTimeout or gs.InvalidAuthkey or gs.MissingAuthKey:
+        return False
+    return True
 
 def get_img_from_web(img):
     resource = urlopen(img)
@@ -79,5 +85,6 @@ def str_to_datetime(string:str):
 
 if __name__ == '__main__':
     set_cookie('cookie.txt')
+    print(is_authkey())
     # pprint(get_active_uids())
     # next(gs.get_primogem_log())

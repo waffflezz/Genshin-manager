@@ -59,10 +59,10 @@ class DBaser:
             cur.execute(f"""CREATE TABLE IF NOT EXISTS {table}(
                        id INT PRIMARY KEY,
                        name TEXT,
-                       rarity TEXT,
+                       rarity INTEGER,
                        type TEXT, 
                        time TEXT,
-                       uid TEXT
+                       uid INTEGER
                        );
                     """)
         conn.commit()
