@@ -170,6 +170,9 @@ class StatisticsAnalyzer:
                 days[(line['time'].year, line['time'].month, line['time'].day)][0] += amount
         return list(map(lambda x: {x[0]: x[1]}, sorted(days.items(), key=lambda x: x[1], reverse=True)))
 
+    def __del__(self):
+        self.conn.close()
+
 
 class WishesGetter:
     def __init__(self, lang, db_storage=f'C:\\Users\\{os.environ.get("USERNAME")}'
@@ -193,5 +196,5 @@ if __name__ == '__main__':
     # print(stats.update_dbs())
     analyzer = StatisticsAnalyzer()
 
-    # print(analyzer.get_primos_per_month())
-    pprint(analyzer.get_primo_top_by_day())
+    pprint(analyzer.get_primos_per_month())
+    # pprint(analyzer.get_primo_top_by_day())
