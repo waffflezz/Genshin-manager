@@ -121,13 +121,26 @@ class StatisticsAnalyzer:
         self.storage = db_storage
         self.baser = DBaser(self.storage)
         self.conn, self.cur = self.baser.get_connection('stats')
+        self.cur.execute("""SELECT uid from primagems""")
+        self.uids = set(self.cur.fetchall()[0])
+        self.cur.execute("""SELECT uid from artifacts""")
+        self.uids.intersection(set(self.cur.fetchall()[0]))
+        self.cur.execute("""SELECT uid from resin""")
+        self.uids.intersection(set(self.cur.fetchall()[0]))
+        self.uids = list(self.uids)
 
-    def get_primos_per_month(self):
-        self.cur.execute("""SELECT time from primagems ORDER BY trans_id DESC;""")
+    def get_primos_per_month(self, uid=None):
+        if uid is None:
+            uid = self.uids[0]
+        self.cur.execute(f"""SELECT time from primagems
+                             WHERE uid={uid}
+                             ORDER BY trans_id DESC;""")
         months = {d: 0 for d in sorted(
             list(set(map(lambda x: tuple(map(int, x[0].split(' ')[0][:7].split('-'))), self.cur.fetchall()))))}
-        self.cur.execute("""SELECT * from primagems
-                            ORDER BY trans_id;""")
+        self.cur.execute(f"""SELECT * from primagems
+                             WHERE uid={uid}
+                             ORDER BY trans_id;""")
+
         while True:
             next_line = self.cur.fetchone()
             if next_line is None:
@@ -138,8 +151,12 @@ class StatisticsAnalyzer:
                 months[(line['time'].year, line['time'].month)] += amount
         return months
 
-    def get_primos_top(self):
-        self.cur.execute("""SELECT reason, amount from primagems ORDER BY trans_id DESC;""")
+    def get_primos_top(self, uid=None):
+        if uid is None:
+            uid = self.uids[0]
+        self.cur.execute(f"""SELECT reason, amount from primagems
+                             WHERE uid={uid} 
+                             ORDER BY trans_id DESC;""")
         primo_top = {}
         while True:
             next_line = self.cur.fetchone()
@@ -154,21 +171,20 @@ class StatisticsAnalyzer:
                 primo_top[reason] += amount
         return sorted(primo_top.items(), key=lambda x: int(x[1]), reverse=True)
 
-    def get_primo_top_by_day(self):
-        self.cur.execute("""SELECT time from primagems ORDER BY trans_id DESC;""")
-        days = {d: [0] for d in sorted(
-            list(set(map(lambda x: tuple(map(int, x[0].split(' ')[0].split('-'))), self.cur.fetchall()))))}
-        self.cur.execute("""SELECT * from primagems
-                                    ORDER BY trans_id;""")
-        while True:
-            next_line = self.cur.fetchone()
-            if next_line is None:
-                break
-            line = to_dict(next_line[1:], 'reason', 'amount', 'time', 'uid')
-            line['time'] = str_to_datetime(line['time'])
-            if (amount := line['amount']) > 0:
-                days[(line['time'].year, line['time'].month, line['time'].day)][0] += amount
-        return list(map(lambda x: {x[0]: x[1]}, sorted(days.items(), key=lambda x: x[1], reverse=True)))
+    def get_primo_top_by_day(self, uid=None):
+        if uid is None:
+            uid = self.uids[0]
+        self.cur.execute(f"""SELECT time from primagems
+                             WHERE uid={uid}
+                             ORDER BY trans_id DESC;""")
+        days = sorted(
+            list(set(map(lambda x: x[0].split(' ')[0], self.cur.fetchall()))), reverse=True)
+        for day in days:
+            self.cur.execute(f"""SELECT reason, amount, time, uid FROM primagems 
+                                WHERE time LIKE '{day}%' AND uid={uid} 
+                                ORDER BY trans_id DESC;""")
+            pprint(self.cur.fetchall())
+            break
 
     def __del__(self):
         self.conn.close()
@@ -196,5 +212,5 @@ if __name__ == '__main__':
     # print(stats.update_dbs())
     analyzer = StatisticsAnalyzer()
 
-    pprint(analyzer.get_primos_per_month())
-    # pprint(analyzer.get_primo_top_by_day())
+    pprint(analyzer.get_primo_top_by_day())
+

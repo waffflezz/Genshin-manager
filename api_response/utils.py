@@ -21,6 +21,8 @@ def get_active_uids():
     accs = sorted(list(map(lambda y: filtrate_dict(y, 'level', 'nickname', 'server', 'uid'),
                            filter(lambda x: x['nickname'] != '玩家' + str(x['uid']), gs.get_game_accounts()))),
                   key=lambda x: int(x['level']), reverse=True)
+    for acc in accs:
+        acc['level'] = int(acc['level'])
     return accs
 
 
@@ -32,12 +34,14 @@ def is_cookie():
         return False
     return True
 
+
 def is_authkey():
     try:
         next(gs.get_primogem_log())
     except gs.AuthkeyError or gs.AuthkeyTimeout or gs.InvalidAuthkey or gs.MissingAuthKey:
         return False
     return True
+
 
 def get_img_from_web(img):
     resource = urlopen(img)
@@ -76,7 +80,7 @@ def test_workable(func):
     return wrapper
 
 
-def str_to_datetime(string:str):
+def str_to_datetime(string: str):
     date, time = string.split(' ')
     date = list(map(int, date.split('-')))
     time = list(map(int, time.split(':')))
@@ -85,6 +89,6 @@ def str_to_datetime(string:str):
 
 if __name__ == '__main__':
     set_cookie('cookie.txt')
-    print(is_authkey())
+    print(get_active_uids())
     # pprint(get_active_uids())
     # next(gs.get_primogem_log())
