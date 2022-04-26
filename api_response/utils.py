@@ -1,7 +1,9 @@
 import os
-import traceback
+import functools
 
 from datetime import datetime
+from time import time
+
 from pprint import pprint
 import genshinstats as gs
 
@@ -15,6 +17,18 @@ def set_cookie(path):
         ltoken = cook.readline().replace('\n', '')
         ltuid = cook.readline().replace('\n', '')
         gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
+
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        ts = time()
+        res = func(*args, **kwargs)
+        te = time()
+        print(f'"{func.__name__}" completed for {te - ts:.4f} secs')
+        return res
+
+    return wrapper
 
 
 def get_active_uids():
@@ -69,12 +83,13 @@ def to_dict(arr, *keys):
 
 
 def test_workable(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:
             res = func(*args, **kwargs)
         except Exception as e:
-            stack = traceback.extract_stack()
-            return f'{stack} -> {e}'
+            print(f'{func.__name__} -> {e}')
+            return e
         return res
 
     return wrapper
