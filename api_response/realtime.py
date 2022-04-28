@@ -26,31 +26,31 @@ def grab_notes(uid, lang):
 
     response = gs.get_notes(uid, lang=lang)
 
-    res_text = []
+    res_text = {'info': {}, 'characters': []}
 
-    res_text.append(
-        f"{trans['completed_commissions'][lang]}{response['completed_commissions']}\\{response['total_commissions']}")
+    info = res_text['info']
+    info['dailik'] = f"{trans['completed_commissions'][lang]}" \
+                     f"{response['completed_commissions']}\\" \
+                     f"{response['total_commissions']}"
 
     is_claimed = trans['claimed'][lang] if response['claimed_commission_reward'] is True else trans['not_claimed'][lang]
-    res_text.append(f"{trans['claimed_commission_reward'][lang]}{is_claimed}")
+    info['reward'] = f"{trans['claimed_commission_reward'][lang]}{is_claimed}"
+    info['bosses'] = f"{trans['remaining_boss_discounts'][lang]}" \
+                     f"{response['remaining_boss_discounts']}\\{response['max_boss_discounts']}"
 
-    res_text.append(f"{trans['remaining_boss_discounts'][lang]}"
-                    f"{response['remaining_boss_discounts']}"
-                    f"\\{response['max_boss_discounts']}")
+    info['resin'] = f"{trans['resin'][lang]}" \
+                    f"{response['resin']}\\{response['max_resin']}\n" \
+                    f"{trans['until_resin_limit'][lang]}" \
+                    f"{get_time_from_sec(response['until_resin_limit'], lang)}"
 
-    res_text.append(f"{trans['resin'][lang]}"
-                    f"{response['resin']}\\{response['max_resin']}\n"
-                    f"{trans['until_resin_limit'][lang]}"
-                    f"{get_time_from_sec(response['until_resin_limit'], lang)}")
-
-    res_text.append(f"{trans['expeditions'][lang]}"
-                    f"{len(list(filter(lambda expa: expa['remaining_time'] != 0, response['expeditions'])))}"
-                    f"\\{response['max_expeditions']}")
+    info['expedition'] = f"{trans['expeditions'][lang]}" \
+                         f"{len(list(filter(lambda expa: expa['remaining_time'] != 0, response['expeditions'])))}" \
+                         f"\\{response['max_expeditions']}"
 
     for exp in response['expeditions']:
-        res_text.append((get_img_from_web(exp['icon']),
-                         f"{trans['remaining_time'][lang]}"
-                         f"{get_time_from_sec(exp['remaining_time'], lang)}"))
+        res_text['characters'].append({'img': get_img_from_web(exp['icon']),
+                                       'time': f"{trans['remaining_time'][lang]}"
+                                               f"{get_time_from_sec(exp['remaining_time'], lang)}"})
 
     return res_text
 
@@ -58,9 +58,9 @@ def grab_notes(uid, lang):
 if __name__ == '__main__':
     from utils import set_cookie
     from pprint import pprint
+
     set_cookie('cookie.txt')
     uid = 705359736
     rus = 'ru-ru'
     eng = 'en-us'
     pprint(grab_notes(uid, eng))
-
