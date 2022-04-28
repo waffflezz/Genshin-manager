@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # Класс управления базой данных
-        self.db_manager = DBaser('C:\\Users\\dimas\\PycharmProjects\\Genshin-manager\\databases\\')
+        self.db_manager = DBaser('C:\\Users\\leva\\PycharmProjects\\Genshin_manager\\databases')
         # self.db_manager.make_statistics_base()
 
         self.stats = statistics.StatisticsGetter("ru-ru")

@@ -5,8 +5,10 @@ import sqlite3 as sql
 
 
 class DBaser:
-    def __init__(self, storage):
-        self.db_storage = storage
+    def __init__(self, storage: str):
+        if not os.path.isdir(storage):
+            os.makedirs(storage)
+        self.db_storage = storage if storage.endswith('\\') else storage + '\\'
         self.db_types = {'stats': self.db_storage + 'statistics.db',
                          'wishes': self.db_storage + 'wishes.db'}
 
@@ -153,7 +155,7 @@ class DBaser:
 
 
 if __name__ == '__main__':
-    baser = DBaser(f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\databases\\')
+    baser = DBaser(f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\databases')
     baser.make_statistics_base()
     # baser.make_wishes_base()
     # conn, cur = baser.get_connection('stats')
