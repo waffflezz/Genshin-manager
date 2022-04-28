@@ -70,9 +70,48 @@ class PrimosModel(ListModel):
         super(PrimosModel, self).__init__(parent)
 
     def add_primos(self, primos):
-        if type(primos) == errors.AuthkeyTimeout or type(primos) == errors.NotLoggedIn:
+        if type(primos) == str:
             self.err_signal.emit(str(primos))
             return
 
         for data in primos:
             self.appendRow(data)
+
+
+class ResinModel(ListModel):
+    err_signal = pyqtSignal(str)
+
+    def __init__(self, parent=None) -> None:
+        super(ResinModel, self).__init__(parent)
+
+    def add_primos(self, primos):
+        if type(primos) == str:
+            self.err_signal.emit(str(primos))
+            return
+
+        for data in primos:
+            self.appendRow(data)
+
+
+class DailsModel(ListModel):
+    err_signal = pyqtSignal(str)
+
+    def __init__(self, parent=None) -> None:
+        super(DailsModel, self).__init__(parent)
+
+    def add_dails(self, data):
+        if type(data) in [StopIteration, RuntimeError]:
+            self.err_signal.emit(str(data))
+            return
+
+        for dails in data:
+            self.appendRow(dails)
+
+
+class ExpeditionModel(ListModel):
+    def __init__(self, parent=None):
+        super(ExpeditionModel, self).__init__(parent)
+
+    def add_characters(self, data):
+        for char in data:
+            self.appendRow(char)

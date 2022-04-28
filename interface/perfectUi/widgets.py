@@ -91,6 +91,7 @@ class DailsDelegate(QStyledItemDelegate):
         painter.drawLine(origin_rect.bottomLeft(), origin_rect.bottomRight())
 
         pix = QPixmap()
+
         pix.loadFromData(data["img"])
         pix = pix.scaled(50, 50, Qt.AspectRatioMode.KeepAspectRatio,
                          Qt.TransformationMode.SmoothTransformation)

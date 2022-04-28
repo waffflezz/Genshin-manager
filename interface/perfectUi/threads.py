@@ -44,7 +44,22 @@ class LoadDails(QThread):
     def run(self):
         self.load_signal.emit(True)
 
-        self.signal.emit(self.stats.get_dailys_page())
+        self.signal.emit(self.stats.get_dailys_page(is_pic=True))
+
+        self.load_signal.emit(False)
+
+
+class UpdateDb(QThread):
+    load_signal = pyqtSignal(bool)
+
+    def __init__(self, stats, parent=None):
+        super(UpdateDb, self).__init__()
+        self.stats = stats
+
+    def run(self) -> None:
+        self.load_signal.emit(True)
+
+        self.stats.update_dbs()
 
         self.load_signal.emit(False)
 
