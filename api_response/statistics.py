@@ -1,9 +1,13 @@
 import os
 
-from datetime import datetime, date
 from api_response.utils import gs
 from pprint import pprint
-from api_response.utils import test_workable, filtrate_dict, get_img_from_web, to_dict, str_to_datetime
+from api_response.utils import (test_workable,
+                                filtrate_dict,
+                                get_img_from_web,
+                                to_dict,
+                                str_to_datetime,
+                                sec_from_time)
 from api_response.db_worker import DBaser
 from sqlite3 import IntegrityError
 
@@ -122,24 +126,16 @@ class StatisticsAnalyzer:
         self.baser = DBaser(self.storage)
         self.conn, self.cur = self.baser.get_connection('stats')
         self.cur.execute("""SELECT uid from primagems""")
-        self.uids = set(self.cur.fetchall()[0])
-        self.cur.execute("""SELECT uid from artifacts""")
-        self.uids.intersection(set(self.cur.fetchall()[0]))
-        self.cur.execute("""SELECT uid from resin""")
-        self.uids.intersection(set(self.cur.fetchall()[0]))
-        self.uids = list(self.uids)
+        self.uids = self.baser.get_uids(self.cur)
 
     def get_primos_per_month(self, uid=None):
         if uid is None:
             uid = self.uids[0]
-        self.cur.execute(f"""SELECT time from primagems
-                             WHERE uid={uid}
-                             ORDER BY trans_id DESC;""")
+
+        self.baser.get_all(self.cur, 'primagems', where=f'uid={uid}', select='time')
         months = {d: 0 for d in sorted(
             list(set(map(lambda x: tuple(map(int, x[0].split(' ')[0][:7].split('-'))), self.cur.fetchall()))))}
-        self.cur.execute(f"""SELECT * from primagems
-                             WHERE uid={uid}
-                             ORDER BY trans_id;""")
+        self.baser.get_all(self.cur, 'primagems', where=f'uid={uid}')
 
         while True:
             next_line = self.cur.fetchone()
@@ -154,9 +150,7 @@ class StatisticsAnalyzer:
     def get_primos_top(self, uid=None):
         if uid is None:
             uid = self.uids[0]
-        self.cur.execute(f"""SELECT reason, amount from primagems
-                             WHERE uid={uid} 
-                             ORDER BY trans_id DESC;""")
+        self.baser.get_all(self.cur, 'primagems', select='reason, amount', where=f'uid={uid}')
         primo_top = {}
         while True:
             next_line = self.cur.fetchone()
@@ -169,22 +163,32 @@ class StatisticsAnalyzer:
                 primo_top[reason] = amount
             else:
                 primo_top[reason] += amount
-        return sorted(primo_top.items(), key=lambda x: int(x[1]), reverse=True)
+        return list(map(lambda x: {'reason': x[0], 'amount': x[1]},
+                        sorted(primo_top.items(), key=lambda x: int(x[1]), reverse=True)))
 
     def get_primo_top_by_day(self, uid=None):
         if uid is None:
             uid = self.uids[0]
-        self.cur.execute(f"""SELECT time from primagems
-                             WHERE uid={uid}
-                             ORDER BY trans_id DESC;""")
+        self.baser.get_all(self.cur, 'primagems', select='time', where=f'uid={uid}')
         days = sorted(
             list(set(map(lambda x: x[0].split(' ')[0], self.cur.fetchall()))), reverse=True)
+
+        fat_days = []
         for day in days:
-            self.cur.execute(f"""SELECT reason, amount, time, uid FROM primagems 
-                                WHERE time LIKE '{day}%' AND uid={uid} 
-                                ORDER BY trans_id DESC;""")
-            pprint(self.cur.fetchall())
-            break
+            self.baser.get_all(self.cur, 'primagems',
+                               select='reason, amount, time, uid',
+                               where=f"time LIKE '{day}%' AND uid={uid}")
+
+            day_acts = list(filter(lambda x: x[1] > 0, map(lambda x: list(x[:-1]), self.cur.fetchall())))
+            primo_sum = 0
+            for x, d in enumerate(day_acts):
+                d[2] = d[2].split(' ')[1]
+                day_acts[x] = to_dict(d, 'reason', 'amount', 'time')
+                primo_sum += day_acts[x]['amount']
+            fat_days.append({'day': day,
+                             'amount': primo_sum,
+                             'acts': sorted(day_acts, key=lambda x: sec_from_time(x['time']))})
+        return sorted(fat_days, key=lambda x: x['amount'], reverse=True)
 
     def __del__(self):
         self.conn.close()
@@ -209,8 +213,7 @@ if __name__ == '__main__':
 
     set_cookie('cookie.txt')
     stats = StatisticsGetter('ru-ru')
-    # print(stats.update_dbs())
+    # stats.update_dbs()
     analyzer = StatisticsAnalyzer()
 
-    pprint(analyzer.get_primo_top_by_day())
-
+    pprint(analyzer.get_primo_top_by_day()[-5:])

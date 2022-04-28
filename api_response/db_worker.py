@@ -68,6 +68,28 @@ class DBaser:
         conn.commit()
 
     @staticmethod
+    def get_uids(cur):
+        cur.execute("""SELECT uid from primagems""")
+        uids = set(cur.fetchall()[0])
+        cur.execute("""SELECT uid from artifacts""")
+        uids.intersection(set(cur.fetchall()[0]))
+        cur.execute("""SELECT uid from resin""")
+        uids.intersection(set(cur.fetchall()[0]))
+        return list(uids)
+
+    @staticmethod
+    def get_all(cur, db_type, select='*', where=None, reverse=True, order='trans_id'):
+        req = f"""SELECT {select} FROM {db_type} """
+        if where:
+            req += f'WHERE {where} '
+        req += f"ORDER BY {order}"
+        if reverse:
+            req += " DESC;"
+        else:
+            req += ";"
+        cur.execute(req)
+
+    @staticmethod
     def add_stat_line(stat, cur, values):
         cur.execute(f"""INSERT INTO {stat}(amount, trans_id, reason, time, uid) 
            VALUES({str(values).replace('[', '').replace(']', '')});""")
@@ -126,6 +148,7 @@ class DBaser:
             if not res:
                 raise StopIteration
             yield res
+
             start = str(res[-1][0])
 
 

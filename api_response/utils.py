@@ -71,6 +71,12 @@ def get_time_from_sec(seconds, lang):
         return f'{hours}h:{mins}m:{sec}s'
 
 
+def sec_from_time(ttime):
+    h, m, s = list(map(int, ttime.split(':')))
+
+    return (h * 24 + m) * 60 + s
+
+
 def filtrate_dict(dictt, *keys):
     return {key: str(dictt[key]) for key in keys}
 
@@ -80,6 +86,8 @@ def to_dict(arr, *keys):
     for key, val in zip(keys, arr):
         res[key] = val
     return res
+
+
 
 
 def test_workable(func):
@@ -103,7 +111,7 @@ def str_to_datetime(string: str):
 
 
 if __name__ == '__main__':
-    set_cookie('cookie.txt')
-    print(get_active_uids())
+
+    print(sec_from_time('05:16:41'))
     # pprint(get_active_uids())
     # next(gs.get_primogem_log())
