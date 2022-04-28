@@ -5,17 +5,27 @@ import sqlite3 as sql
 
 
 class DBaser:
-    def __init__(self, storage: str):
+    def __init__(self, storage: str, is_auto_make=True):
         if not os.path.isdir(storage):
             os.makedirs(storage)
         self.db_storage = storage if storage.endswith('\\') else storage + '\\'
+
         self.db_types = {'stats': self.db_storage + 'statistics.db',
                          'wishes': self.db_storage + 'wishes.db'}
+        if is_auto_make:
+            self.auto_make()
 
     def get_connection(self, db_type):
         conn = sql.connect(self.db_types[db_type])
         cur = conn.cursor()
         return conn, cur
+
+    def auto_make(self):
+        dirlist = os.listdir(self.db_storage)
+        if 'wishes.db' not in dirlist:
+            self.make_wishes_base()
+        if 'statistics.db' not in dirlist:
+            self.make_statistics_base()
 
     def make_statistics_base(self):
         conn, cur = self.get_connection('stats')
@@ -119,14 +129,20 @@ class DBaser:
     @staticmethod
     def stat_page(stat, cur, amount=8):
         start = None
+
         while True:
             cur.execute(f"""SELECT * FROM {stat} {'WHERE trans_id < ' + start if start else ''}
                                         ORDER BY trans_id DESC;""")
             res = cur.fetchmany(amount)
+
             if not res:
-                raise StopIteration
+                return StopIteration('StopIteration')
             yield res
+
             start = str(res[-1][0])
+
+
+
 
     @staticmethod
     def art_page(cur, amount=8):
@@ -155,8 +171,8 @@ class DBaser:
 
 
 if __name__ == '__main__':
-    baser = DBaser(f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\databases')
-    baser.make_statistics_base()
+    baser = DBaser(f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\NoDBS')
+    # baser.auto_make()
     # baser.make_wishes_base()
     # conn, cur = baser.get_connection('stats')
     # aboba = baser.daily_page(cur)

@@ -3,6 +3,7 @@ import os
 from api_response.utils import gs
 from pprint import pprint
 from api_response.utils import (test_workable,
+                                timer,
                                 filtrate_dict,
                                 get_img_from_web,
                                 to_dict,
@@ -13,8 +14,9 @@ from sqlite3 import IntegrityError
 
 
 class StatisticsGetter:
+
     def __init__(self, lang, db_storage=f'C:\\Users\\{os.environ.get("USERNAME")}'
-                                        f'\\PycharmProjects\\Genshin_manager\\databases\\'):
+                                        f'\\PycharmProjects\\Genshin_manager\\databases\\', is_auto_update=False):
         self.lang = lang
 
         self.db_path = db_storage
@@ -25,6 +27,7 @@ class StatisticsGetter:
         self.resin = self.baser.stat_page('resin', self.cur)
         self.dailys = self.baser.daily_page(self.cur)
         self.arts = self.baser.art_page(self.cur)
+
 
     @test_workable
     def get_next_page(self, stat_type, is_uid=False):
@@ -107,12 +110,20 @@ class StatisticsGetter:
         self.conn.commit()
         return f'dailys db updated, added {counter} lines'
 
+    @timer
+    @test_workable
     def update_dbs(self):
         updates = [self.stat_db_update('primagems'),
                    self.stat_db_update('resin'),
                    self.arts_db_update(),
                    self.daily_db_update()]
         return updates
+
+    def update_generators(self):
+        self.primos = self.baser.stat_page('primagems', self.cur)
+        self.resin = self.baser.stat_page('resin', self.cur)
+        self.dailys = self.baser.daily_page(self.cur)
+        self.arts = self.baser.art_page(self.cur)
 
     def __del__(self):
         # self.conn.commit()
@@ -128,6 +139,7 @@ class StatisticsAnalyzer:
         self.cur.execute("""SELECT uid from primagems""")
         self.uids = self.baser.get_uids(self.cur)
 
+    @test_workable
     def get_primos_per_month(self, uid=None):
         if uid is None:
             uid = self.uids[0]
@@ -147,6 +159,7 @@ class StatisticsAnalyzer:
                 months[(line['time'].year, line['time'].month)] += amount
         return months
 
+    @test_workable
     def get_primos_top(self, uid=None):
         if uid is None:
             uid = self.uids[0]
@@ -166,6 +179,7 @@ class StatisticsAnalyzer:
         return list(map(lambda x: {'reason': x[0], 'amount': x[1]},
                         sorted(primo_top.items(), key=lambda x: int(x[1]), reverse=True)))
 
+    @test_workable
     def get_primo_top_by_day(self, uid=None):
         if uid is None:
             uid = self.uids[0]
@@ -212,8 +226,14 @@ if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie('cookie.txt')
-    stats = StatisticsGetter('ru-ru')
-    # stats.update_dbs()
+    stats = StatisticsGetter('ru-ru', db_storage=r'C:\Users\leva\PycharmProjects\Genshin_manager\databases')
+    # print(stats.get_next_page('resin'))
+    # print(stats.get_next_page('resin'))
+    # print(stats.update_dbs())
     analyzer = StatisticsAnalyzer()
-
+    print('get_primos_per_month')
+    pprint(analyzer.get_primos_per_month())
+    print('\nget_primos_top')
+    pprint(analyzer.get_primos_top())
+    print('\nget_primo_top_by_day')
     pprint(analyzer.get_primo_top_by_day()[-5:])

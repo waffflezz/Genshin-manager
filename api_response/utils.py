@@ -88,8 +88,6 @@ def to_dict(arr, *keys):
     return res
 
 
-
-
 def test_workable(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -110,8 +108,10 @@ def str_to_datetime(string: str):
     return datetime(*date, *time)
 
 
-if __name__ == '__main__':
+@test_workable
+def test(it):
+    return next(it)
 
-    print(sec_from_time('05:16:41'))
-    # pprint(get_active_uids())
-    # next(gs.get_primogem_log())
+
+if __name__ == '__main__':
+    pass
