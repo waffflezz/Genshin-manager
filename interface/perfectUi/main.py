@@ -8,14 +8,15 @@ from PyQt5.QtCore import (
     Qt, QThread, pyqtSignal
 )
 
-from models import PrimosModel
+from models import PrimosModel, DailsModel
 from widgets import TestDelegate, DailsDelegate
 from error_widget import ErrorMessage
-from threads import LoadPrimos, LoadResin, LoadDails
+from threads import LoadPrimos, LoadResin, LoadDails, UpdateDb
 
 from PyQt5.QtGui import QPixmap
 from sys import argv
 from api_response import realtime, statistics, is_cookie, cookie_path
+from api_response.db_worker import DBaser
 from interface.ui_cookie_dialog import CookieDialog
 from styles import style_bt_standard
 import ui
@@ -36,6 +37,16 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = ui.Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # Класс управления базой данных
+        self.db_manager = DBaser('C:\\Users\\dimas\\PycharmProjects\\Genshin-manager\\databases\\')
+        # self.db_manager.make_statistics_base()
+
+        self.stats = statistics.StatisticsGetter("ru-ru")
+
+        # Тред который обновляет базы данных
+        self.dbs_updater = UpdateDb(self.stats)
+        # self.dbs_updater.start()
 
         self.err_message = ErrorMessage()
 
@@ -59,7 +70,6 @@ class MainWindow(QMainWindow):
         self.notes.signal.connect(self.update_wishes)
         self.notes.load_signal.connect(self.loading)
 
-        self.stats = statistics.StatisticsGetter("ru-ru")
 
         # Создаю модель и делегат для примогемов
         self.primos_model = PrimosModel(self.ui.primos_view)
@@ -72,7 +82,7 @@ class MainWindow(QMainWindow):
         self.resin_delegate = TestDelegate(self.ui.resins_view)
 
         # Создаю модель и делегат для ежедневных штук
-        self.daily_model = PrimosModel(self.ui.dails_view)
+        self.daily_model = DailsModel(self.ui.dails_view)
         self.daily_model.err_signal.connect(self.err_message.show_message)
         self.daily_delegate = DailsDelegate(self.ui.dails_view)
 
@@ -97,7 +107,7 @@ class MainWindow(QMainWindow):
         self.resin.load_signal.connect(self.loading)
 
         self.dails = LoadDails(self.stats)
-        self.dails.signal.connect(self.daily_model.add_primos)
+        self.dails.signal.connect(self.daily_model.add_dails)
         self.dails.load_signal.connect(self.loading)
 
         self.ui.settingsWarning.hide()
@@ -107,7 +117,7 @@ class MainWindow(QMainWindow):
             self.cookie_dialog.show()
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
-        self.dails.start()
+        self.daily_model.add_dails(self.stats.get_dailys_page())
 
     def buttons_events(self):
         button = self.sender()
@@ -249,11 +259,6 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage("LOADING")
         else:
             self.statusBar().clearMessage()
-
-    def closeEvent(self, event) -> None:
-        self.stats.conn.close()
-        print('Приложение закрыто бд закрыто')
-        event.accept()
 
 
 class LoadNotes(QThread):
