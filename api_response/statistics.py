@@ -15,8 +15,7 @@ from sqlite3 import IntegrityError
 
 class StatisticsGetter:
 
-    def __init__(self, lang, db_storage=f'C:\\Users\\{os.environ.get("USERNAME")}'
-                                        f'\\PycharmProjects\\Genshin_manager\\databases\\', is_auto_update=False):
+    def __init__(self, lang, db_storage='C:\\ProgramData\\Genshin_manager\\databases\\', is_auto_update=False):
         self.lang = lang
 
         self.db_path = db_storage
@@ -131,8 +130,7 @@ class StatisticsGetter:
 
 
 class StatisticsAnalyzer:
-    def __init__(self, db_storage=f'C:\\Users\\{os.environ.get("USERNAME")}'
-                                  f'\\PycharmProjects\\Genshin_manager\\databases\\'):
+    def __init__(self, db_storage='C:\\ProgramData\\Genshin_manager\\databases\\'):
         self.storage = db_storage
         self.baser = DBaser(self.storage)
         self.conn, self.cur = self.baser.get_connection('stats')
@@ -209,8 +207,7 @@ class StatisticsAnalyzer:
 
 
 class WishesGetter:
-    def __init__(self, lang, db_storage=f'C:\\Users\\{os.environ.get("USERNAME")}'
-                                        f'\\PycharmProjects\\Genshin_manager\\databases\\'):
+    def __init__(self, lang, db_storage='C:\\ProgramData\\Genshin_manager\\databases\\'):
         self.lang = lang
 
         self.db_path = db_storage
@@ -226,11 +223,12 @@ if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie('cookie.txt')
-    stats = StatisticsGetter('ru-ru', db_storage=r'C:\Users\leva\PycharmProjects\Genshin_manager\databases')
+    stats = StatisticsGetter('ru-ru')
     # print(stats.get_next_page('resin'))
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())
     analyzer = StatisticsAnalyzer()
+    print(analyzer.baser.db_storage)
     print('get_primos_per_month')
     pprint(analyzer.get_primos_per_month())
     print('\nget_primos_top')

@@ -9,10 +9,8 @@ import genshinstats as gs
 
 from urllib.request import urlopen
 
-cookie_path = os.path.dirname(os.path.abspath(__file__)) + r'\cookie.txt'
 
-
-def set_cookie(path):
+def set_cookie(path='C:\\ProgramData\\Genshin_manager\\cookie.txt'):
     with open(path) as cook:
         ltoken = cook.readline().replace('\n', '')
         ltuid = cook.readline().replace('\n', '')
@@ -41,7 +39,7 @@ def get_active_uids():
 
 
 def is_cookie():
-    set_cookie(cookie_path)
+    set_cookie()
     try:
         gs.claim_daily_reward()
     except gs.errors.NotLoggedIn:
@@ -114,4 +112,4 @@ def test(it):
 
 
 if __name__ == '__main__':
-    pass
+    print(cookie_path)

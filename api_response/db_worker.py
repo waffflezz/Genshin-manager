@@ -171,7 +171,7 @@ class DBaser:
 
 
 if __name__ == '__main__':
-    baser = DBaser(f'C:\\Users\\{os.environ.get("USERNAME")}\\PycharmProjects\\Genshin_manager\\NoDBS')
+    baser = DBaser('C:\\ProgramData\\Genshin_manager\\databases\\')
     # baser.auto_make()
     # baser.make_wishes_base()
     # conn, cur = baser.get_connection('stats')

@@ -59,8 +59,8 @@ if __name__ == '__main__':
     from utils import set_cookie
     from pprint import pprint
 
-    set_cookie('cookie.txt')
+    set_cookie()
     uid = 705359736
     rus = 'ru-ru'
     eng = 'en-us'
-    pprint(grab_notes(uid, eng))
+    pprint(grab_notes(uid, rus))
