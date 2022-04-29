@@ -16,7 +16,7 @@ class DBaser:
             self.auto_make()
 
     def get_connection(self, db_type):
-        conn = sql.connect(self.db_types[db_type])
+        conn = sql.connect(self.db_types[db_type], check_same_thread=False)
         cur = conn.cursor()
         return conn, cur
 
@@ -141,9 +141,6 @@ class DBaser:
 
             start = str(res[-1][0])
 
-
-
-
     @staticmethod
     def art_page(cur, amount=8):
         start = None
@@ -154,7 +151,8 @@ class DBaser:
             if not res:
                 raise StopIteration
             yield res
-            start = str(res[-1][0])
+            if res:
+                start = str(res[-1][0])
 
     @staticmethod
     def daily_page(cur, amount=8):
