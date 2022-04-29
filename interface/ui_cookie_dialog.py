@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QDialog
-from api_response import cookie_path, is_cookie
+from api_response import is_cookie
 from . import dialog
 
 
@@ -15,7 +15,7 @@ class CookieDialog(QDialog):
         self.ui.okButton.clicked.connect(self.save_cookie)
 
     def save_cookie(self):
-        with open(cookie_path, "w") as f:
+        with open('C:\\ProgramData\\Genshin_manager\\cookie.txt', "w") as f:
             f.write(self.ui.ltokenEdit.text() + "\n")
             f.write(self.ui.ltuidEdit.text() + "\n")
 

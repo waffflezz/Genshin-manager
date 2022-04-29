@@ -7,15 +7,17 @@ from PyQt5.QtCore import (
     QPropertyAnimation, QEasingCurve, QSize,
     Qt, QThread, pyqtSignal
 )
+from threads import (
+    LoadPrimos, LoadResin, LoadDails,
+    LoadExpedition
+)
 
-from models import PrimosModel, DailsModel
-from widgets import TestDelegate, DailsDelegate
+from models import PrimosModel, DailsModel, CharactersModel
+from widgets import TestDelegate, DailsDelegate, CharactersDelegate
 from error_widget import ErrorMessage
-from threads import LoadPrimos, LoadResin, LoadDails, UpdateDb
 
-from PyQt5.QtGui import QPixmap
 from sys import argv
-from api_response import realtime, statistics, is_cookie, cookie_path
+from api_response import realtime, statistics, is_cookie, set_cookie
 from api_response.db_worker import DBaser
 from interface.ui_cookie_dialog import CookieDialog
 from styles import style_bt_standard
@@ -35,18 +37,18 @@ def deselect_menu(get_style):
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        set_cookie()
+
         self.ui = ui.Ui_MainWindow()
         self.ui.setupUi(self)
 
         # Класс управления базой данных
-        self.db_manager = DBaser('C:\\Users\\leva\\PycharmProjects\\Genshin_manager\\databases')
-        # self.db_manager.make_statistics_base()
+        self.db_manager = DBaser('C:\\ProgramData\\Genshin_manager\\databases\\')
+        self.db_manager.make_statistics_base()
 
         self.stats = statistics.StatisticsGetter("ru-ru")
-
-        # Тред который обновляет базы данных
-        self.dbs_updater = UpdateDb(self.stats)
-        # self.dbs_updater.start()
+        # self.stats.update_dbs()
 
         self.err_message = ErrorMessage()
 
@@ -65,12 +67,6 @@ class MainWindow(QMainWindow):
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.page)
 
-        self.notes = LoadNotes()
-        self.notes.signal.connect(self.add_wishes)
-        self.notes.signal.connect(self.update_wishes)
-        self.notes.load_signal.connect(self.loading)
-
-
         # Создаю модель и делегат для примогемов
         self.primos_model = PrimosModel(self.ui.primos_view)
         self.primos_model.err_signal.connect(self.err_message.show_message)
@@ -86,6 +82,10 @@ class MainWindow(QMainWindow):
         self.daily_model.err_signal.connect(self.err_message.show_message)
         self.daily_delegate = DailsDelegate(self.ui.dails_view)
 
+        # Создаю модель и делегат для героев в экспедиции
+        self.chars_model = CharactersModel(self.ui.characters_view)
+        self.chars_delegate = CharactersDelegate(self.ui.characters_view)
+
         # Подключаю к вьюшке примогемы
         self.ui.primos_view.setModel(self.primos_model)
         self.ui.primos_view.setItemDelegate(self.test_delegate)
@@ -98,6 +98,11 @@ class MainWindow(QMainWindow):
         self.ui.dails_view.setModel(self.daily_model)
         self.ui.dails_view.setItemDelegate(self.daily_delegate)
 
+        # Подключаю к вьющке героев из экспедиции
+        self.ui.characters_view.setModel(self.chars_model)
+        self.ui.characters_view.setItemDelegate(self.chars_delegate)
+
+        # QThreads для загрузки данных
         self.primos = LoadPrimos(self.stats)
         self.primos.signal.connect(self.primos_model.add_primos)
         self.primos.load_signal.connect(self.loading)
@@ -109,6 +114,16 @@ class MainWindow(QMainWindow):
         self.dails = LoadDails(self.stats)
         self.dails.signal.connect(self.daily_model.add_dails)
         self.dails.load_signal.connect(self.loading)
+
+        uid = 705359736
+        rus = 'ru-ru'
+
+        notes = realtime.grab_notes(uid, rus)
+
+        self.expedition = LoadExpedition(notes)
+        self.expedition.notes_signal.connect(self.add_notes)
+        self.expedition.characters_signal.connect(self.chars_model.add_characters)
+        self.expedition.load_signal.connect(self.loading)
 
         self.ui.settingsWarning.hide()
 
@@ -130,7 +145,7 @@ class MainWindow(QMainWindow):
             if is_cookie() is False:
                 self.cookie_dialog.show()
                 return
-            self.notes.start()
+            self.expedition.start()
         elif button.objectName() == "main_menu":
             self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
             self.reset_style("main_menu")
@@ -154,7 +169,7 @@ class MainWindow(QMainWindow):
             self.reset_style("settingsButton")
             button.setStyleSheet(select_menu(button.styleSheet()))
         elif button.objectName() == "saveButton":
-            with open(cookie_path, "w") as f:
+            with open('C:\\ProgramData\\Genshin_manager\\cookie.txt', "w") as f:
                 f.write(self.ui.ltoken.text() + "\n")
                 f.write(self.ui.ltuid.text() + "\n")
 
@@ -193,88 +208,71 @@ class MainWindow(QMainWindow):
         button.clicked.connect(self.buttons_events)
         self.ui.verticalLayout_4.addWidget(button)
 
+    def reset_models(self):
+        self.primos_model.clear()
+        self.resin_model.clear()
+        self.daily_model.clear()
+        self.chars_model.clear()
+
     def reset_style(self, widget):
         for button in self.ui.sidebar_menu.findChildren(QPushButton):
             if button.objectName() != widget and button.objectName() != "sidebarButton":
                 button.setStyleSheet(deselect_menu(button.styleSheet()))
 
-    # TODO: передлать в модель с методом прогрузки в методе
-    # TODO: добавить окошко с кнопкой, в который вводится uid и печатаются герои в экспедиции
-    def add_wishes(self, notes):
-        if len(self.ui.scrollAreaWidgetContents.children()) > 1:
-            return
+    # TODO: Доделать информацию в экспедициях
+    def add_notes(self, notes):
 
-        update_button = QPushButton(self.ui.scrollAreaWidgetContents)
-        update_button.setObjectName("update_button")
-        update_button.setText("Обновить")
-        update_button.clicked.connect(self.notes.start)
-        self.ui.scrollAreaLayout.addWidget(update_button)
+        # expedition_info = QLabel(self.ui.scrollAreaWidgetContents)
+        # expedition_info.setObjectName('wishes_info')
+        # expedition_info.setText("".join(i + "\n" for i in notes[:5]))
+        # self.ui.scrollAreaLayout.addWidget(expedition_info)
 
-        expedition_info = QLabel(self.ui.scrollAreaWidgetContents)
-        expedition_info.setObjectName('wishes_info')
-        expedition_info.setText("".join(i + "\n" for i in notes[:5]))
-        self.ui.scrollAreaLayout.addWidget(expedition_info)
+        # for i, note in enumerate(notes[5:]):
+        #     frame = QFrame(self.ui.scrollAreaWidgetContents)
+        #
+        #     pix = QPixmap()
+        #     pix.loadFromData(b"".join(note[:-1]))
+        #     hero_pix = QLabel(frame)
+        #     hero_pix.setObjectName(f"hero_pix_{i}")
+        #     hero_pix.setPixmap(pix)
+        #
+        #     expedition_time = QLabel(frame)
+        #     expedition_time.setObjectName(f"heroes_time_{i}")
+        #     expedition_time.setText(note[-1])
+        #
+        #     v_layout = QHBoxLayout(frame)
+        #     v_layout.addWidget(hero_pix)
+        #     v_layout.addWidget(expedition_time)
+        #
+        #     self.ui.scrollAreaLayout.addWidget(frame)
+        #     spacer_item = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        #     v_layout.addItem(spacer_item)
 
-        for i, note in enumerate(notes[5:]):
-            frame = QFrame(self.ui.scrollAreaWidgetContents)
+        # spacer_item = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        # self.ui.scrollAreaLayout.addItem(spacer_item)
+        # self.ui.scrollAreaWidgetContents.show()
 
-            pix = QPixmap()
-            pix.loadFromData(b"".join(note[:-1]))
-            hero_pix = QLabel(frame)
-            hero_pix.setObjectName(f"hero_pix_{i}")
-            hero_pix.setPixmap(pix)
+        pass
 
-            expedition_time = QLabel(frame)
-            expedition_time.setObjectName(f"heroes_time_{i}")
-            expedition_time.setText(note[-1])
-
-            v_layout = QHBoxLayout(frame)
-            v_layout.addWidget(hero_pix)
-            v_layout.addWidget(expedition_time)
-
-            self.ui.scrollAreaLayout.addWidget(frame)
-            spacer_item = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-            v_layout.addItem(spacer_item)
-
-        spacer_item = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.ui.scrollAreaLayout.addItem(spacer_item)
-        self.ui.scrollAreaWidgetContents.show()
-
-    # TODO: сделать отдельным методом в моделе вишесев
-    def update_wishes(self, notes):
-        expedition_info = self.ui.scrollAreaWidgetContents.findChild(QLabel, "wishes_info")
-        expedition_info.setText("".join(i + "\n" for i in notes[:5]))
-
-        for i, note in enumerate(notes[5:]):
-            pix = QPixmap()
-            pix.loadFromData(b"".join(note[:-1]))
-            hero_pix = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"hero_pix_{i}")
-            hero_pix.setPixmap(pix)
-
-            expedition_time = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
-            expedition_time.setText(note[-1])
+    # # TODO: сделать отдельным методом в моделе вишесев
+    # def update_wishes(self, notes):
+    #     expedition_info = self.ui.scrollAreaWidgetContents.findChild(QLabel, "wishes_info")
+    #     expedition_info.setText("".join(i + "\n" for i in notes[:5]))
+    #
+    #     for i, note in enumerate(notes[5:]):
+    #         pix = QPixmap()
+    #         pix.loadFromData(b"".join(note[:-1]))
+    #         hero_pix = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"hero_pix_{i}")
+    #         hero_pix.setPixmap(pix)
+    #
+    #         expedition_time = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
+    #         expedition_time.setText(note[-1])
 
     def loading(self, is_load):
         if is_load:
             self.statusBar().showMessage("LOADING")
         else:
             self.statusBar().clearMessage()
-
-
-class LoadNotes(QThread):
-    signal = pyqtSignal(list)
-    load_signal = pyqtSignal(bool)
-
-    def __init__(self, parent=None):
-        super().__init__()
-
-    def run(self):
-        self.load_signal.emit(True)
-        uid = 705359736
-        rus = 'ru-ru'
-        notes = realtime.grab_notes(uid, rus)
-        self.signal.emit(notes)
-        self.load_signal.emit(False)
 
 
 if __name__ == '__main__':

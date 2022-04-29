@@ -49,17 +49,19 @@ class LoadDails(QThread):
         self.load_signal.emit(False)
 
 
-class UpdateDb(QThread):
+class LoadExpedition(QThread):
+    notes_signal = pyqtSignal(object)
+    characters_signal = pyqtSignal(object)
     load_signal = pyqtSignal(bool)
 
-    def __init__(self, stats, parent=None):
-        super(UpdateDb, self).__init__()
-        self.stats = stats
+    def __init__(self, exp, parent=None):
+        super(LoadExpedition, self).__init__(parent)
+        self.exp = exp
 
-    def run(self) -> None:
+    def run(self):
         self.load_signal.emit(True)
 
-        self.stats.update_dbs()
+        self.notes_signal.emit(self.exp['info'])
+        self.characters_signal.emit(self.exp['characters'])
 
         self.load_signal.emit(False)
-

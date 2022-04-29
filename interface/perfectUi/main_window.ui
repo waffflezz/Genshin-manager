@@ -292,7 +292,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="main_page">
           <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -457,7 +457,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>383</height>
+                  <height>398</height>
                  </size>
                 </property>
                </spacer>
@@ -485,89 +485,17 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             <number>0</number>
            </property>
            <item>
-            <widget class="QScrollArea" name="scrollArea">
-             <property name="styleSheet">
-              <string notr="true"> QScrollBar:vertical {
-	border: none;
-    background: rgb(45, 45, 68);
-    width: 14px;
-    margin: 15px 0 15px 0;
-	border-radius: 0px;
- }
-
-/*  HANDLE BAR VERTICAL */
-QScrollBar::handle:vertical {	
-	background-color: rgb(80, 80, 122);
-	min-height: 30px;
-	border-radius: 7px;
-}
-QScrollBar::handle:vertical:hover{	
-	background-color: rgb(255, 0, 127);
-}
-QScrollBar::handle:vertical:pressed {	
-	background-color: rgb(185, 0, 92);
-}
-
-/* BTN TOP - SCROLLBAR */
-QScrollBar::sub-line:vertical {
-	border: none;
-	background-color: rgb(59, 59, 90);
-	height: 15px;
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
-	subcontrol-position: top;
-	subcontrol-origin: margin;
-}
-QScrollBar::sub-line:vertical:hover {	
-	background-color: rgb(255, 0, 127);
-}
-QScrollBar::sub-line:vertical:pressed {	
-	background-color: rgb(185, 0, 92);
-}
-
-/* BTN BOTTOM - SCROLLBAR */
-QScrollBar::add-line:vertical {
-	border: none;
-	background-color: rgb(59, 59, 90);
-	height: 15px;
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
-	subcontrol-position: bottom;
-	subcontrol-origin: margin;
-}
-QScrollBar::add-line:vertical:hover {	
-	background-color: rgb(255, 0, 127);
-}
-QScrollBar::add-line:vertical:pressed {	
-	background-color: rgb(185, 0, 92);
-}
-
-/* RESET ARROW */
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-	background: none;
-}
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-	background: none;
-}</string>
+            <widget class="QFrame" name="notes_frame">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>900</width>
-                <height>615</height>
-               </rect>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <layout class="QVBoxLayout" name="scrollAreaLayout"/>
-             </widget>
             </widget>
+           </item>
+           <item>
+            <widget class="QListView" name="characters_view"/>
            </item>
           </layout>
          </widget>
@@ -676,7 +604,72 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             <number>0</number>
            </property>
            <item>
-            <widget class="QListView" name="resins_view"/>
+            <widget class="QListView" name="resins_view">
+             <property name="styleSheet">
+              <string notr="true"> QScrollBar:vertical {
+	border: none;
+    background: rgb(45, 45, 68);
+    width: 14px;
+    margin: 15px 0 15px 0;
+	border-radius: 0px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {	
+	background-color: rgb(80, 80, 122);
+	min-height: 30px;
+	border-radius: 7px;
+}
+QScrollBar::handle:vertical:hover{	
+	background-color: rgb(255, 0, 127);
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+	border: none;
+	background-color: rgb(59, 59, 90);
+	height: 15px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical:hover {	
+	background-color: rgb(255, 0, 127);
+}
+QScrollBar::sub-line:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+	border: none;
+	background-color: rgb(59, 59, 90);
+	height: 15px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical:hover {	
+	background-color: rgb(255, 0, 127);
+}
+QScrollBar::add-line:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* RESET ARROW */
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+}</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -816,7 +809,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>964</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -824,6 +817,7 @@ QPushButton:pressed {
  </widget>
  <resources>
   <include location="resourses.qrc"/>
+  <include location="../../../../.designer/backup/resourses.qrc"/>
  </resources>
  <connections/>
 </ui>

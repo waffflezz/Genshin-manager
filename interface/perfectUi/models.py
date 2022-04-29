@@ -70,8 +70,7 @@ class PrimosModel(ListModel):
         super(PrimosModel, self).__init__(parent)
 
     def add_primos(self, primos):
-        if type(primos) == str:
-            self.err_signal.emit(str(primos))
+        if type(primos) != list:
             return
 
         for data in primos:
@@ -85,8 +84,7 @@ class ResinModel(ListModel):
         super(ResinModel, self).__init__(parent)
 
     def add_primos(self, primos):
-        if type(primos) == str:
-            self.err_signal.emit(str(primos))
+        if type(primos) != list:
             return
 
         for data in primos:
@@ -101,17 +99,19 @@ class DailsModel(ListModel):
 
     def add_dails(self, data):
         if type(data) in [StopIteration, RuntimeError]:
-            self.err_signal.emit(str(data))
             return
 
         for dails in data:
             self.appendRow(dails)
 
 
-class ExpeditionModel(ListModel):
+class CharactersModel(ListModel):
     def __init__(self, parent=None):
-        super(ExpeditionModel, self).__init__(parent)
+        super(CharactersModel, self).__init__(parent)
 
     def add_characters(self, data):
+        if type(data) != list:
+            return
+
         for char in data:
             self.appendRow(char)

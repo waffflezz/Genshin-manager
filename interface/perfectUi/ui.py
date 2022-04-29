@@ -247,7 +247,7 @@ class Ui_MainWindow(object):
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
         self.verticalLayout_13.addWidget(self.label_2)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 383, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 398, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_13.addItem(spacerItem1)
         self.horizontalLayout_2.addWidget(self.frame_5)
         self.stackedWidget.addWidget(self.main_page)
@@ -257,79 +257,14 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.scrollArea = QtWidgets.QScrollArea(self.page)
-        self.scrollArea.setStyleSheet(" QScrollBar:vertical {\n"
-"    border: none;\n"
-"    background: rgb(45, 45, 68);\n"
-"    width: 14px;\n"
-"    margin: 15px 0 15px 0;\n"
-"    border-radius: 0px;\n"
-" }\n"
-"\n"
-"/*  HANDLE BAR VERTICAL */\n"
-"QScrollBar::handle:vertical {    \n"
-"    background-color: rgb(80, 80, 122);\n"
-"    min-height: 30px;\n"
-"    border-radius: 7px;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover{    \n"
-"    background-color: rgb(255, 0, 127);\n"
-"}\n"
-"QScrollBar::handle:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
-"}\n"
-"\n"
-"/* BTN TOP - SCROLLBAR */\n"
-"QScrollBar::sub-line:vertical {\n"
-"    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
-"    height: 15px;\n"
-"    border-top-left-radius: 7px;\n"
-"    border-top-right-radius: 7px;\n"
-"    subcontrol-position: top;\n"
-"    subcontrol-origin: margin;\n"
-"}\n"
-"QScrollBar::sub-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
-"}\n"
-"QScrollBar::sub-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
-"}\n"
-"\n"
-"/* BTN BOTTOM - SCROLLBAR */\n"
-"QScrollBar::add-line:vertical {\n"
-"    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
-"    height: 15px;\n"
-"    border-bottom-left-radius: 7px;\n"
-"    border-bottom-right-radius: 7px;\n"
-"    subcontrol-position: bottom;\n"
-"    subcontrol-origin: margin;\n"
-"}\n"
-"QScrollBar::add-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
-"}\n"
-"QScrollBar::add-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
-"}\n"
-"\n"
-"/* RESET ARROW */\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"    background: none;\n"
-"}\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"    background: none;\n"
-"}")
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 900, 615))
-        self.scrollAreaWidgetContents.setStyleSheet("")
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.scrollAreaLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
-        self.scrollAreaLayout.setObjectName("scrollAreaLayout")
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.verticalLayout_5.addWidget(self.scrollArea)
+        self.notes_frame = QtWidgets.QFrame(self.page)
+        self.notes_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.notes_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.notes_frame.setObjectName("notes_frame")
+        self.verticalLayout_5.addWidget(self.notes_frame)
+        self.characters_view = QtWidgets.QListView(self.page)
+        self.characters_view.setObjectName("characters_view")
+        self.verticalLayout_5.addWidget(self.characters_view)
         self.stackedWidget.addWidget(self.page)
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
@@ -410,6 +345,68 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.resins_view = QtWidgets.QListView(self.page_5)
+        self.resins_view.setStyleSheet(" QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: rgb(45, 45, 68);\n"
+"    width: 14px;\n"
+"    margin: 15px 0 15px 0;\n"
+"    border-radius: 0px;\n"
+" }\n"
+"\n"
+"/*  HANDLE BAR VERTICAL */\n"
+"QScrollBar::handle:vertical {    \n"
+"    background-color: rgb(80, 80, 122);\n"
+"    min-height: 30px;\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover{    \n"
+"    background-color: rgb(255, 0, 127);\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed {    \n"
+"    background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* BTN TOP - SCROLLBAR */\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: none;\n"
+"    background-color: rgb(59, 59, 90);\n"
+"    height: 15px;\n"
+"    border-top-left-radius: 7px;\n"
+"    border-top-right-radius: 7px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover {    \n"
+"    background-color: rgb(255, 0, 127);\n"
+"}\n"
+"QScrollBar::sub-line:vertical:pressed {    \n"
+"    background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* BTN BOTTOM - SCROLLBAR */\n"
+"QScrollBar::add-line:vertical {\n"
+"    border: none;\n"
+"    background-color: rgb(59, 59, 90);\n"
+"    height: 15px;\n"
+"    border-bottom-left-radius: 7px;\n"
+"    border-bottom-right-radius: 7px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover {    \n"
+"    background-color: rgb(255, 0, 127);\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed {    \n"
+"    background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* RESET ARROW */\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"    background: none;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
         self.resins_view.setObjectName("resins_view")
         self.verticalLayout_7.addWidget(self.resins_view)
         self.stackedWidget.addWidget(self.page_5)
@@ -475,7 +472,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.mainbody)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 964, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 964, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -483,7 +480,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
