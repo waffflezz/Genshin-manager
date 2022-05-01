@@ -25,12 +25,12 @@ import ui
 
 
 def select_menu(get_style):
-    select = get_style + "QPushButton { border-right: 7px solid rgb(44, 49, 60); }"
+    select = get_style + "QPushButton { border-right: 7px solid rgb(73, 117, 125); }"
     return select
 
 
 def deselect_menu(get_style):
-    deselect = get_style.replace("QPushButton { border-right: 7px solid rgb(44, 49, 60); }", "")
+    deselect = get_style.replace("QPushButton { border-right: 7px solid rgb(73, 117, 125); }", "")
     return deselect
 
 
@@ -221,38 +221,12 @@ class MainWindow(QMainWindow):
 
     # TODO: Доделать информацию в экспедициях
     def add_notes(self, notes):
-
-        # expedition_info = QLabel(self.ui.scrollAreaWidgetContents)
-        # expedition_info.setObjectName('wishes_info')
-        # expedition_info.setText("".join(i + "\n" for i in notes[:5]))
-        # self.ui.scrollAreaLayout.addWidget(expedition_info)
-
-        # for i, note in enumerate(notes[5:]):
-        #     frame = QFrame(self.ui.scrollAreaWidgetContents)
-        #
-        #     pix = QPixmap()
-        #     pix.loadFromData(b"".join(note[:-1]))
-        #     hero_pix = QLabel(frame)
-        #     hero_pix.setObjectName(f"hero_pix_{i}")
-        #     hero_pix.setPixmap(pix)
-        #
-        #     expedition_time = QLabel(frame)
-        #     expedition_time.setObjectName(f"heroes_time_{i}")
-        #     expedition_time.setText(note[-1])
-        #
-        #     v_layout = QHBoxLayout(frame)
-        #     v_layout.addWidget(hero_pix)
-        #     v_layout.addWidget(expedition_time)
-        #
-        #     self.ui.scrollAreaLayout.addWidget(frame)
-        #     spacer_item = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        #     v_layout.addItem(spacer_item)
-
-        # spacer_item = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        # self.ui.scrollAreaLayout.addItem(spacer_item)
-        # self.ui.scrollAreaWidgetContents.show()
-
-        pass
+        self.ui.info_1.setText('3/3')
+        self.ui.info_2.setText('2/5')
+        self.ui.info_3.setText('5/100')
+        self.ui.info_4.setText('11/2')
+        self.ui.info_5.setText('yes')
+        self.ui.info_6.setText('5/5')
 
     # # TODO: сделать отдельным методом в моделе вишесев
     # def update_wishes(self, notes):

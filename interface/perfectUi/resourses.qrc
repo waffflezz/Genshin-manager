@@ -4,8 +4,10 @@
   </qresource>
   <qresource prefix="logo">
     <file>icons/logo.png</file>
+    <file>icons/Genshin_Manager_logo.png</file>
   </qresource>
   <qresource prefix="16x16">
+    <file>icons/exp upd btn.png</file>
     <file>icons/16x16/cil-menu.png</file>
     <file>icons/16x16/cil-airplane-mode.png</file>
     <file>icons/16x16/cil-code.png</file>

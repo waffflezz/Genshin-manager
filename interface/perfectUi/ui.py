@@ -16,7 +16,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(964, 670)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setStyleSheet("background-color: rgb(47, 52, 62);")
+        self.centralwidget.setStyleSheet("background-color: rgb(240, 255, 255);")
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.sidebar_menu = QtWidgets.QFrame(self.centralwidget)
         self.sidebar_menu.setMaximumSize(QtCore.QSize(60, 16777215))
-        self.sidebar_menu.setStyleSheet("background-color: rgb(86, 93, 112);")
+        self.sidebar_menu.setStyleSheet("background-color: rgb(171, 213, 222);")
         self.sidebar_menu.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.sidebar_menu.setFrameShadow(QtWidgets.QFrame.Raised)
         self.sidebar_menu.setObjectName("sidebar_menu")
@@ -50,30 +50,34 @@ class Ui_MainWindow(object):
 "                background-position: left center;\n"
 "                background-repeat: no-repeat;\n"
 "                border: none;\n"
-"                color: rgb(200, 200, 200);\n"
-"                border-left: 22px solid rgb(27, 29, 35);\n"
-"                background-color: rgb(27, 29, 35);\n"
+"                color: rgb(33, 53, 57);\n"
+"                border-left: 22px solid rgb(120, 193, 207);\n"
+"                background-color: rgb(120, 193, 207);\n"
 "                text-align: left;\n"
 "                padding-left: 45px;\n"
+"                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton[Active=true] {\n"
 "                background-image: url(:/16x16/icons/16x16/cil-menu.png);\n"
 "                background-position: left center;\n"
 "                background-repeat: no-repeat;\n"
 "                border: none;\n"
-"                border-left: 22px solid rgb(27, 29, 35);\n"
-"                border-right: 45px solid rgb(44, 49, 60);\n"
-"                background-color: rgb(27, 29, 35);\n"
+"                border-left: 22px solid  rgb(120, 193, 207);\n"
+"                border-right: 45px solid rgb(120, 193, 207);\n"
+"                background-color: rgb(120, 193, 207);\n"
 "                text-align: left;\n"
 "                padding-left: 45px;\n"
+"                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton:hover {\n"
-"                background-color: rgb(33, 37, 43);\n"
-"                border-left: 22px solid rgb(33, 37, 43);\n"
+"                background-color: rgb(109, 176, 188);\n"
+"                border-left: 22px solid rgb(109, 176, 188);\n"
+"                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton:pressed {\n"
-"                background-color: rgb(85, 170, 255);\n"
-"                border-left: 22px solid rgb(85, 170, 255);\n"
+"                background-color: rgb(129, 209, 223);\n"
+"                border-left: 22px solid rgb(129, 209, 223);\n"
+"                border-radius: 12px;\n"
 "            }")
         self.sidebarButton.setIconSize(QtCore.QSize(16, 16))
         self.sidebarButton.setObjectName("sidebarButton")
@@ -108,30 +112,34 @@ class Ui_MainWindow(object):
 "                background-position: left center;\n"
 "                background-repeat: no-repeat;\n"
 "                border: none;\n"
-"                color: rgb(200, 200, 200);\n"
-"                border-left: 22px solid rgb(27, 29, 35);\n"
-"                background-color: rgb(27, 29, 35);\n"
+"                color: rgb(33, 53, 57);\n"
+"                border-left: 22px solid rgb(120, 193, 207);\n"
+"                background-color: rgb(120, 193, 207);\n"
 "                text-align: left;\n"
 "                padding-left: 45px;\n"
+"                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton[Active=true] {\n"
 "                background-image: url(:/16x16/icons/16x16/cil-menu.png);\n"
 "                background-position: left center;\n"
 "                background-repeat: no-repeat;\n"
 "                border: none;\n"
-"                border-left: 22px solid rgb(27, 29, 35);\n"
-"                border-right: 45px solid rgb(44, 49, 60);\n"
-"                background-color: rgb(27, 29, 35);\n"
+"                border-left: 22px solid  rgb(120, 193, 207);\n"
+"                border-right: 45px solid rgb(120, 193, 207);\n"
+"                background-color: rgb(120, 193, 207);\n"
 "                text-align: left;\n"
 "                padding-left: 45px;\n"
+"                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton:hover {\n"
-"                background-color: rgb(33, 37, 43);\n"
-"                border-left: 22px solid rgb(33, 37, 43);\n"
+"                background-color: rgb(109, 176, 188);\n"
+"                border-left: 22px solid rgb(109, 176, 188);\n"
+"                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton:pressed {\n"
-"                background-color: rgb(85, 170, 255);\n"
-"                border-left: 22px solid rgb(85, 170, 255);\n"
+"                background-color: rgb(129, 209, 223);\n"
+"                border-left: 22px solid rgb(129, 209, 223);\n"
+"                border-radius: 12px;\n"
 "            }")
         self.settingsButton.setIconSize(QtCore.QSize(16, 16))
         self.settingsButton.setObjectName("settingsButton")
@@ -139,7 +147,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.frame_3)
         self.horizontalLayout.addWidget(self.sidebar_menu)
         self.mainbody = QtWidgets.QFrame(self.centralwidget)
-        self.mainbody.setStyleSheet("background-color: rgb(66, 71, 86);")
+        self.mainbody.setStyleSheet("background-color: rgb(240, 255, 255);")
         self.mainbody.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.mainbody.setFrameShadow(QtWidgets.QFrame.Raised)
         self.mainbody.setObjectName("mainbody")
@@ -162,6 +170,7 @@ class Ui_MainWindow(object):
         self.frame_4.setSizePolicy(sizePolicy)
         self.frame_4.setMinimumSize(QtCore.QSize(0, 0))
         self.frame_4.setMaximumSize(QtCore.QSize(330, 16777215))
+        self.frame_4.setStyleSheet("background-color: rgb(199, 227, 232);")
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_4.setObjectName("frame_4")
@@ -241,30 +250,264 @@ class Ui_MainWindow(object):
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.frame_5)
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.label_2 = QtWidgets.QLabel(self.frame_5)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
         self.label_2.setMaximumSize(QtCore.QSize(500, 200))
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap(":/logo/icons/logo.png"))
+        self.label_2.setPixmap(QtGui.QPixmap(":/logo/icons/Genshin_Manager_logo.png"))
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
-        self.verticalLayout_13.addWidget(self.label_2)
+        self.verticalLayout_13.addWidget(self.label_2, 0, QtCore.Qt.AlignHCenter)
         spacerItem1 = QtWidgets.QSpacerItem(20, 398, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_13.addItem(spacerItem1)
         self.horizontalLayout_2.addWidget(self.frame_5)
         self.stackedWidget.addWidget(self.main_page)
         self.page = QtWidgets.QWidget()
+        self.page.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.page.setObjectName("page")
-        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.page)
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_5.setSpacing(0)
-        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.page)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setSpacing(0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.notes_frame = QtWidgets.QFrame(self.page)
+        self.notes_frame.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.notes_frame.setStyleSheet("background-color: rgb(199, 227, 232);")
         self.notes_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.notes_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.notes_frame.setObjectName("notes_frame")
-        self.verticalLayout_5.addWidget(self.notes_frame)
-        self.characters_view = QtWidgets.QListView(self.page)
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.notes_frame)
+        self.verticalLayout_5.setContentsMargins(12, 0, 12, 0)
+        self.verticalLayout_5.setSpacing(0)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.frame_6 = QtWidgets.QFrame(self.notes_frame)
+        self.frame_6.setMaximumSize(QtCore.QSize(16777215, 70))
+        self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_6.setObjectName("frame_6")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.frame_6)
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.label_5 = QtWidgets.QLabel(self.frame_6)
+        self.label_5.setMaximumSize(QtCore.QSize(16777215, 60))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(16)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_5.addWidget(self.label_5)
+        self.pushButton = QtWidgets.QPushButton(self.frame_6)
+        self.pushButton.setMaximumSize(QtCore.QSize(70, 70))
+        self.pushButton.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/16x16/icons/exp upd btn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton.setIcon(icon)
+        self.pushButton.setIconSize(QtCore.QSize(40, 40))
+        self.pushButton.setDefault(False)
+        self.pushButton.setFlat(True)
+        self.pushButton.setObjectName("pushButton")
+        self.horizontalLayout_5.addWidget(self.pushButton)
+        self.verticalLayout_5.addWidget(self.frame_6)
+        self.line_4 = QtWidgets.QFrame(self.notes_frame)
+        self.line_4.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_4.setObjectName("line_4")
+        self.verticalLayout_5.addWidget(self.line_4)
+        self.frame_7 = QtWidgets.QFrame(self.notes_frame)
+        self.frame_7.setStyleSheet("")
+        self.frame_7.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_7.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_7.setObjectName("frame_7")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.frame_7)
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_8.setSpacing(0)
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.label_7 = QtWidgets.QLabel(self.frame_7)
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.label_7.setFont(font)
+        self.label_7.setObjectName("label_7")
+        self.horizontalLayout_8.addWidget(self.label_7)
+        self.info_1 = QtWidgets.QLabel(self.frame_7)
+        self.info_1.setMaximumSize(QtCore.QSize(70, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.info_1.setFont(font)
+        self.info_1.setText("")
+        self.info_1.setObjectName("info_1")
+        self.horizontalLayout_8.addWidget(self.info_1)
+        self.verticalLayout_5.addWidget(self.frame_7)
+        self.line_3 = QtWidgets.QFrame(self.notes_frame)
+        self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_3.setObjectName("line_3")
+        self.verticalLayout_5.addWidget(self.line_3)
+        self.frame_8 = QtWidgets.QFrame(self.notes_frame)
+        self.frame_8.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_8.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_8.setObjectName("frame_8")
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.frame_8)
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_9.setSpacing(0)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.label_6 = QtWidgets.QLabel(self.frame_8)
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.label_6.setFont(font)
+        self.label_6.setObjectName("label_6")
+        self.horizontalLayout_9.addWidget(self.label_6)
+        self.info_2 = QtWidgets.QLabel(self.frame_8)
+        self.info_2.setMaximumSize(QtCore.QSize(70, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.info_2.setFont(font)
+        self.info_2.setText("")
+        self.info_2.setObjectName("info_2")
+        self.horizontalLayout_9.addWidget(self.info_2)
+        self.verticalLayout_5.addWidget(self.frame_8)
+        self.line_2 = QtWidgets.QFrame(self.notes_frame)
+        self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.verticalLayout_5.addWidget(self.line_2)
+        self.frame_9 = QtWidgets.QFrame(self.notes_frame)
+        self.frame_9.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_9.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_9.setObjectName("frame_9")
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout(self.frame_9)
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_10.setSpacing(0)
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.label_4 = QtWidgets.QLabel(self.frame_9)
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout_10.addWidget(self.label_4)
+        self.info_3 = QtWidgets.QLabel(self.frame_9)
+        self.info_3.setMaximumSize(QtCore.QSize(70, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.info_3.setFont(font)
+        self.info_3.setText("")
+        self.info_3.setObjectName("info_3")
+        self.horizontalLayout_10.addWidget(self.info_3)
+        self.verticalLayout_5.addWidget(self.frame_9)
+        self.line = QtWidgets.QFrame(self.notes_frame)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.verticalLayout_5.addWidget(self.line)
+        self.frame_10 = QtWidgets.QFrame(self.notes_frame)
+        self.frame_10.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_10.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_10.setObjectName("frame_10")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.frame_10)
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.label_3 = QtWidgets.QLabel(self.frame_10)
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.label_3.setFont(font)
+        self.label_3.setObjectName("label_3")
+        self.horizontalLayout_6.addWidget(self.label_3)
+        self.info_4 = QtWidgets.QLabel(self.frame_10)
+        self.info_4.setMaximumSize(QtCore.QSize(70, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.info_4.setFont(font)
+        self.info_4.setText("")
+        self.info_4.setObjectName("info_4")
+        self.horizontalLayout_6.addWidget(self.info_4)
+        self.verticalLayout_5.addWidget(self.frame_10)
+        self.line_5 = QtWidgets.QFrame(self.notes_frame)
+        self.line_5.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_5.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_5.setObjectName("line_5")
+        self.verticalLayout_5.addWidget(self.line_5)
+        self.frame_11 = QtWidgets.QFrame(self.notes_frame)
+        self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_11.setObjectName("frame_11")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.frame_11)
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_7.setSpacing(0)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.label_8 = QtWidgets.QLabel(self.frame_11)
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.label_8.setFont(font)
+        self.label_8.setObjectName("label_8")
+        self.horizontalLayout_7.addWidget(self.label_8)
+        self.info_5 = QtWidgets.QLabel(self.frame_11)
+        self.info_5.setMaximumSize(QtCore.QSize(70, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.info_5.setFont(font)
+        self.info_5.setText("")
+        self.info_5.setObjectName("info_5")
+        self.horizontalLayout_7.addWidget(self.info_5)
+        self.verticalLayout_5.addWidget(self.frame_11)
+        self.horizontalLayout_4.addWidget(self.notes_frame)
+        self.frame_12 = QtWidgets.QFrame(self.page)
+        self.frame_12.setMaximumSize(QtCore.QSize(550, 16777215))
+        self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_12.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_12.setObjectName("frame_12")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.frame_12)
+        self.verticalLayout_9.setContentsMargins(12, 0, 0, 0)
+        self.verticalLayout_9.setSpacing(0)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.frame_13 = QtWidgets.QFrame(self.frame_12)
+        self.frame_13.setMaximumSize(QtCore.QSize(16777215, 80))
+        self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_13.setObjectName("frame_13")
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.frame_13)
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.label_9 = QtWidgets.QLabel(self.frame_13)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
+        self.label_9.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(16)
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
+        self.horizontalLayout_11.addWidget(self.label_9)
+        self.info_6 = QtWidgets.QLabel(self.frame_13)
+        self.info_6.setMaximumSize(QtCore.QSize(70, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(10)
+        self.info_6.setFont(font)
+        self.info_6.setText("")
+        self.info_6.setObjectName("info_6")
+        self.horizontalLayout_11.addWidget(self.info_6)
+        self.verticalLayout_9.addWidget(self.frame_13)
+        self.characters_view = QtWidgets.QListView(self.frame_12)
+        self.characters_view.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.characters_view.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.characters_view.setObjectName("characters_view")
-        self.verticalLayout_5.addWidget(self.characters_view)
+        self.verticalLayout_9.addWidget(self.characters_view)
+        self.horizontalLayout_4.addWidget(self.frame_12)
         self.stackedWidget.addWidget(self.page)
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
@@ -472,7 +715,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.mainbody)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 964, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 964, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -488,6 +731,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.sidebarButton.setText(_translate("MainWindow", "MENU"))
         self.settingsButton.setText(_translate("MainWindow", "SETTINGS"))
+        self.label_5.setText(_translate("MainWindow", "Дневник"))
+        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p>Выполненно<br/>поручений:</p></body></html>"))
+        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Награда за</p><p>поручения:</p></body></html>"))
+        self.label_4.setText(_translate("MainWindow", "<html><head/><body><p>Еженедельные<br/>боссы:</p></body></html>"))
+        self.label_3.setText(_translate("MainWindow", "Смола:"))
+        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p>До полного<br/>восстановления:</p></body></html>"))
+        self.label_9.setText(_translate("MainWindow", "Экспедиции"))
         self.label.setText(_translate("MainWindow", "Settings:"))
         self.settingsWarning.setText(_translate("MainWindow", "Проверьте введенные данные"))
         self.ltoken.setPlaceholderText(_translate("MainWindow", "ltoken"))
