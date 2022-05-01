@@ -21,11 +21,12 @@ class StatisticsGetter:
         self.db_path = db_storage
         self.baser = DBaser(self.db_path)
         self.conn, self.cur = self.baser.get_connection('stats')
-
         self.primos = self.baser.stat_page('primagems', self.cur)
         self.resin = self.baser.stat_page('resin', self.cur)
         self.dailys = self.baser.daily_page(self.cur)
         self.arts = self.baser.art_page(self.cur)
+        if is_auto_update:
+            self.update_dbs()
 
 
     @test_workable
@@ -116,6 +117,7 @@ class StatisticsGetter:
                    self.stat_db_update('resin'),
                    self.arts_db_update(),
                    self.daily_db_update()]
+        self.update_generators()
         return updates
 
     def update_generators(self):
@@ -222,16 +224,16 @@ class WishesGetter:
 if __name__ == '__main__':
     from utils import set_cookie
 
-    set_cookie('cookie.txt')
-    stats = StatisticsGetter('ru-ru')
-    # print(stats.get_next_page('resin'))
+    set_cookie()
+    stats = StatisticsGetter('ru-ru', is_auto_update=True)
+    pprint(stats.get_next_page('resin'))
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())
-    analyzer = StatisticsAnalyzer()
-    print(analyzer.baser.db_storage)
-    print('get_primos_per_month')
-    pprint(analyzer.get_primos_per_month())
-    print('\nget_primos_top')
-    pprint(analyzer.get_primos_top())
-    print('\nget_primo_top_by_day')
-    pprint(analyzer.get_primo_top_by_day()[-5:])
+    # analyzer = StatisticsAnalyzer()
+    #
+    # print('get_primos_per_month')
+    # pprint(analyzer.get_primos_per_month())
+    # print('\nget_primos_top')
+    # pprint(analyzer.get_primos_top())
+    # print('\nget_primo_top_by_day')
+    # pprint(analyzer.get_primo_top_by_day()[-5:])
