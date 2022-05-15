@@ -28,7 +28,6 @@ class StatisticsGetter:
         if is_auto_update:
             self.update_dbs()
 
-
     @test_workable
     def get_next_page(self, stat_type, is_uid=False):
         td = {'resin': self.resin, 'primos': self.primos}
@@ -50,25 +49,33 @@ class StatisticsGetter:
                 rew['img'] = get_img_from_web(rew['img'])
         return page
 
-    @test_workable
+    @timer
+    # @test_workable
     def stat_db_update(self, reason):
-        if reason == 'resin':
-            stat = gs.get_resin_log(lang=self.lang)
-        elif reason == 'primagems':
-            stat = gs.get_primogem_log(lang=self.lang)
-        else:
-            raise 'Несуществующая причина обновления'
-
+        last_id = 0
         counter = 0
-        for field in stat:
-            try:
+        while True:
+            if reason == 'resin':
+                stat = gs.get_resin_log(lang=self.lang, size=20, end_id=last_id)
+            elif reason == 'primagems':
+                stat = gs.get_primogem_log(lang=self.lang, size=20, end_id=last_id)
+            else:
+                raise 'Несуществующая причина обновления'
 
+            vals = list(filter(lambda x: x[1] not in list(map(lambda y: str(y[0]),
+                                                              self.baser.get_ids(self.cur, reason))),
+                               list(map(lambda field:
+                                        list(filtrate_dict(
+                                            field, 'amount', 'id', 'reason', 'time', 'uid').values()), stat))))
+
+            if vals:
+                last_id = vals[-1][1]
                 self.baser.add_stat_line(reason,
                                          self.cur,
-                                         list(filtrate_dict(field, 'amount', 'id', 'reason', 'time', 'uid').values()))
-            except IntegrityError:
+                                         vals)
+                counter += len(vals)
+            else:
                 break
-            counter += 1
 
         self.conn.commit()
         return f'{reason} db updated, added {counter} lines'
@@ -88,7 +95,6 @@ class StatisticsGetter:
             except IntegrityError:
                 break
             counter += 1
-            # break
         self.conn.commit()
         return f'artifacts db updated, added {counter} lines'
 
@@ -225,8 +231,9 @@ if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie()
-    stats = StatisticsGetter('ru-ru', is_auto_update=True)
-    pprint(stats.get_next_page('resin'))
+    stats = StatisticsGetter('ru-ru', is_auto_update=False)
+    pprint(stats.stat_db_update('primagems'))
+
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())
     # analyzer = StatisticsAnalyzer()

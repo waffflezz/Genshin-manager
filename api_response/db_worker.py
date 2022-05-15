@@ -102,19 +102,26 @@ class DBaser:
         cur.execute(req)
 
     @staticmethod
+    def get_ids(cur, db_type):
+        cur.execute(f"SELECT trans_id FROM {db_type} ORDER BY trans_id DESC;")
+        return cur.fetchall()
+
+    @staticmethod
     def add_stat_line(stat, cur, values):
-        cur.execute(f"""INSERT INTO {stat}(amount, trans_id, reason, time, uid) 
-           VALUES({str(values).replace('[', '').replace(']', '')});""")
+        print(values[0])
+        cur.executemany(f"""INSERT INTO {stat}(amount, trans_id, reason, time, uid) 
+           VALUES(?, ?, ?, ?, ?);""", values)
 
     @staticmethod
     def add_art_line(cur, values):
         cur.execute(f"""INSERT INTO artifacts(id, name, rarity, reason, time, uid) 
-               VALUES({str(values).replace('[', '').replace(']', '')});""")
+               VALUES(?, ?, ?, ?, ?, ?);""", values)
 
     @staticmethod
     def add_daily_line(cur, values):
         cur.execute(f"""INSERT INTO dailys(amount, time, img, name, id) 
-                   VALUES({str(values).replace('[', '').replace(']', '')});""")
+                   VALUES(?, ?, ?, ?, ?);""", values)
+    #     {str(values).replace('[', '').replace(']', '')}
 
     @staticmethod
     def get_stat_page(stat, cur, start=None, amount=8):
