@@ -65,8 +65,8 @@ class StatisticsGetter:
             vals = list(filter(lambda x: x[1] not in list(map(lambda y: str(y[0]),
                                                               self.baser.get_ids(self.cur, reason, 'trans_id'))),
                                map(lambda field:
-                                        list(filtrate_dict(
-                                            field, 'amount', 'id', 'reason', 'time', 'uid').values()), stat)))
+                                   list(filtrate_dict(
+                                       field, 'amount', 'id', 'reason', 'time', 'uid').values()), stat)))
 
             if vals:
                 last_id = vals[-1][1]
@@ -205,6 +205,7 @@ class StatisticsAnalyzer:
                                where=f"time LIKE '{day}%' AND uid={uid}")
 
             day_acts = list(filter(lambda x: x[1] > 0, map(lambda x: list(x[:-1]), self.cur.fetchall())))
+
             primo_sum = 0
             for x, d in enumerate(day_acts):
                 d[2] = d[2].split(' ')[1]
@@ -213,7 +214,19 @@ class StatisticsAnalyzer:
             fat_days.append({'day': day,
                              'amount': primo_sum,
                              'acts': sorted(day_acts, key=lambda x: sec_from_time(x['time']))})
-        return sorted(fat_days, key=lambda x: x['amount'], reverse=True)
+
+        fat_days = sorted(fat_days, key=lambda x: x['amount'], reverse=True)
+
+        x60len = len([x for x in fat_days if x['amount'] <= 60])
+        first_60_index = [i['amount'] for i in fat_days].index(60) + 1
+        del fat_days[first_60_index:]
+        for trans in fat_days[-1]['acts']:
+            del trans['time']
+        del fat_days[-1]['day']
+        fat_days[-1]['days_count'] = x60len
+        # print(x60len, first_60_index)
+        # return 0
+        return fat_days
 
     def __del__(self):
         self.conn.close()
@@ -236,16 +249,16 @@ if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie()
-    stats = StatisticsGetter('ru-ru', is_auto_update=False)
-    pprint(stats.update_dbs())
+    # stats = StatisticsGetter('ru-ru', is_auto_update=False)
+    # pprint(stats.update_dbs())
 
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())
     analyzer = StatisticsAnalyzer()
 
-    print('get_primos_per_month')
-    pprint(analyzer.get_primos_per_month())
-    print('\nget_primos_top')
-    pprint(analyzer.get_primos_top())
+    # print('get_primos_per_month')
+    # pprint(analyzer.get_primos_per_month())
+    # print('\nget_primos_top')
+    # pprint(analyzer.get_primos_top())
     print('\nget_primo_top_by_day')
     pprint(analyzer.get_primo_top_by_day()[-5:])
