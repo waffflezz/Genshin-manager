@@ -71,6 +71,7 @@ class MainWindow(QMainWindow):
 
         self.ui.settingsButton.clicked.connect(self.buttons_events)
         self.ui.saveButton.clicked.connect(self.buttons_events)
+        self.ui.upd_realtime_button.clicked.connect(self.buttons_events)
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.page)
 
@@ -122,12 +123,7 @@ class MainWindow(QMainWindow):
         self.dails.signal.connect(self.daily_model.add_dails)
         self.dails.load_signal.connect(self.loading)
 
-        uid = 705359736
-        rus = 'ru-ru'
-
-        notes = realtime.grab_notes(uid, rus)
-
-        self.expedition = LoadExpedition(notes)
+        self.expedition = LoadExpedition()
         self.expedition.notes_signal.connect(self.add_notes)
         self.expedition.characters_signal.connect(self.chars_model.add_characters)
         self.expedition.load_signal.connect(self.loading)
@@ -256,7 +252,7 @@ class MainWindow(QMainWindow):
         self.ui.info_1.setText(notes['dailik'].replace('\\', '/'))
         self.ui.info_2.setText(notes['reward'])
         self.ui.info_3.setText(notes['bosses'].replace('\\', '/'))
-        self.ui.info_4.setText(notes['resin']['amount'].replace('\\', '/')[:-2])
+        self.ui.info_4.setText(notes['resin']['amount'].replace('\\', '/')[:-1])
         self.ui.info_5.setText(notes['resin']['time'])
         self.ui.info_6.setText(notes['expedition'].replace('\\', '/'))
 

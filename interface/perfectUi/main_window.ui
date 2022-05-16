@@ -306,7 +306,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="main_page">
           <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1182,6 +1182,32 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                <number>0</number>
               </property>
               <item>
+               <widget class="QLabel" name="label_13">
+                <property name="font">
+                 <font>
+                  <family>Georgia</family>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Примагемы:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_9">
+                <property name="maximumSize">
+                 <size>
+                  <width>130</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QFrame" name="frame_18">
                 <property name="minimumSize">
                  <size>
@@ -1284,6 +1310,11 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
               </item>
               <item>
                <widget class="QListView" name="primos_view">
+                <property name="font">
+                 <font>
+                  <family>Georgia</family>
+                 </font>
+                </property>
                 <property name="styleSheet">
                  <string notr="true"> QScrollBar:vertical {
 	border: none;
@@ -1478,6 +1509,32 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                <number>0</number>
               </property>
               <item>
+               <widget class="QLabel" name="label_14">
+                <property name="font">
+                 <font>
+                  <family>Georgia</family>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Смола:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_8">
+                <property name="maximumSize">
+                 <size>
+                  <width>130</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QFrame" name="frame_23">
                 <property name="minimumSize">
                  <size>
@@ -1592,6 +1649,11 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
               </item>
               <item>
                <widget class="QListView" name="resins_view">
+                <property name="font">
+                 <font>
+                  <family>Georgia</family>
+                 </font>
+                </property>
                 <property name="styleSheet">
                  <string notr="true"> QScrollBar:vertical {
 	border: none;
