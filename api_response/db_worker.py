@@ -102,19 +102,19 @@ class DBaser:
         cur.execute(req)
 
     @staticmethod
-    def get_ids(cur, db_type):
-        cur.execute(f"SELECT trans_id FROM {db_type} ORDER BY trans_id DESC;")
+    def get_ids(cur, db_type, id_type):
+        cur.execute(f"SELECT {id_type} FROM {db_type} ORDER BY {id_type} DESC;")
         return cur.fetchall()
 
     @staticmethod
     def add_stat_line(stat, cur, values):
-        print(values[0])
+
         cur.executemany(f"""INSERT INTO {stat}(amount, trans_id, reason, time, uid) 
            VALUES(?, ?, ?, ?, ?);""", values)
 
     @staticmethod
     def add_art_line(cur, values):
-        cur.execute(f"""INSERT INTO artifacts(id, name, rarity, reason, time, uid) 
+        cur.executemany(f"""INSERT INTO artifacts(id, name, rarity, reason, time, uid) 
                VALUES(?, ?, ?, ?, ?, ?);""", values)
 
     @staticmethod

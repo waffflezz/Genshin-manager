@@ -50,7 +50,7 @@ class StatisticsGetter:
         return page
 
     @timer
-    # @test_workable
+    @test_workable
     def stat_db_update(self, reason):
         last_id = 0
         counter = 0
@@ -63,10 +63,10 @@ class StatisticsGetter:
                 raise 'Несуществующая причина обновления'
 
             vals = list(filter(lambda x: x[1] not in list(map(lambda y: str(y[0]),
-                                                              self.baser.get_ids(self.cur, reason))),
-                               list(map(lambda field:
+                                                              self.baser.get_ids(self.cur, reason, 'trans_id'))),
+                               map(lambda field:
                                         list(filtrate_dict(
-                                            field, 'amount', 'id', 'reason', 'time', 'uid').values()), stat))))
+                                            field, 'amount', 'id', 'reason', 'time', 'uid').values()), stat)))
 
             if vals:
                 last_id = vals[-1][1]
@@ -80,21 +80,26 @@ class StatisticsGetter:
         self.conn.commit()
         return f'{reason} db updated, added {counter} lines'
 
-    @test_workable
+    @timer
+    # @test_workable
     def arts_db_update(self):
-        arts = gs.get_artifact_log(lang=self.lang)
+        last_id = 0
         counter = 0
-
-        for field in arts:
-            try:
-                self.baser.add_art_line(self.cur,
-                                        list(filtrate_dict(field,
-                                                           'id', 'name',
-                                                           'rarity', 'reason',
-                                                           'time', 'uid').values()))
-            except IntegrityError:
+        while True:
+            arts = gs.get_artifact_log(lang=self.lang, size=20, end_id=last_id)
+            vals = list(filter(lambda x: x[0] not in list(map(lambda y: str(y[0]),
+                                                              self.baser.get_ids(self.cur, 'artifacts', 'id'))),
+                               map(lambda field:
+                                   list(filtrate_dict(field,
+                                                      'id', 'name',
+                                                      'rarity', 'reason',
+                                                      'time', 'uid').values()), arts)))
+            if vals:
+                last_id = vals[-1][0]
+                self.baser.add_art_line(self.cur, vals)
+                counter += len(vals)
+            else:
                 break
-            counter += 1
         self.conn.commit()
         return f'artifacts db updated, added {counter} lines'
 
@@ -232,7 +237,7 @@ if __name__ == '__main__':
 
     set_cookie()
     stats = StatisticsGetter('ru-ru', is_auto_update=False)
-    pprint(stats.stat_db_update('primagems'))
+    pprint(stats.update_dbs())
 
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())
