@@ -14,8 +14,8 @@ class TestDelegate(QStyledItemDelegate):
         super(TestDelegate, self).__init__(parent)
 
         self.__margin = 5
-        self.__font_size = 15
-        self.__small_font_size = self.__font_size * 0.8
+        self.__font_size = 9
+        self.__small_font_size = self.__font_size * 0.6
 
     def paint(self, painter: QPainter, option: QStyleOptionViewItem,
               index: QModelIndex) -> None:
@@ -34,26 +34,23 @@ class TestDelegate(QStyledItemDelegate):
         painter.setClipping(True)
         painter.setClipRect(origin_rect)
 
-        # grad = QLinearGradient(origin_rect.topLeft(), origin_rect.bottomRight())
-        # grad.setColorAt(0, QColor('#85004B'))
-        # grad.setColorAt(1, QColor('#4380D3'))
-        #
-        # painter.fillRect(origin_rect, QBrush(grad))
+        painter.setBrush(QColor(199, 227, 232))
+        painter.drawRect(origin_rect)
 
         painter.setPen(palette.shadow().color())
         painter.drawLine(origin_rect.bottomLeft(), origin_rect.bottomRight())
-        painter.drawLine(origin_rect.left() + 150, origin_rect.top(),
-                         origin_rect.left() + 150, origin_rect.bottom())
-        painter.drawLine(origin_rect.left() + 580, origin_rect.top(),
-                         origin_rect.left() + 580, origin_rect.bottom())
+        painter.drawLine(origin_rect.left() + 97, origin_rect.top(),
+                         origin_rect.left() + 97, origin_rect.bottom())
+        painter.drawLine(origin_rect.left() + 394, origin_rect.top(),
+                         origin_rect.left() + 394, origin_rect.bottom())
 
         painter.setFont(font)
         painter.setPen(palette.text().color())
-        painter.drawText(origin_rect.left() + 10, origin_rect.center().y(), f'Кол-во: {data["amount"]}')
-        painter.drawText(origin_rect.left() + 590, origin_rect.center().y() - 10, f'Время:')
-        painter.drawText(origin_rect.left() + 590, origin_rect.center().y() + 10, f'{data["time"]}')
-        painter.drawText(origin_rect.left() + 160, origin_rect.center().y() - 10, f'Получено за:')
-        painter.drawText(origin_rect.left() + 160, origin_rect.center().y() + 10, f'{data["reason"]}')
+        painter.drawText(origin_rect.left() + 30, origin_rect.center().y(), f'{data["amount"]}')
+        painter.drawText(origin_rect.left() + 100, origin_rect.center().y(), f'{data["reason"]}')
+        date, time = data["time"].split()
+        painter.drawText(origin_rect.left() + 398, origin_rect.center().y(), date)
+        painter.drawText(origin_rect.left() + 398, origin_rect.center().y() + 16, time)
 
         painter.restore()
 

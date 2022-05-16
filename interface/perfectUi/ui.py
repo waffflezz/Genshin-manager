@@ -14,7 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(964, 670)
+        MainWindow.resize(960, 640)
+        MainWindow.setMinimumSize(QtCore.QSize(960, 640))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("background-color: rgb(240, 255, 255);")
         self.centralwidget.setObjectName("centralwidget")
@@ -180,7 +181,7 @@ class Ui_MainWindow(object):
         self.dails_view = QtWidgets.QListView(self.frame_4)
         self.dails_view.setStyleSheet(" QScrollBar:vertical {\n"
 "    border: none;\n"
-"    background: rgb(45, 45, 68);\n"
+"    background: rgb(199, 227, 232);\n"
 "    width: 14px;\n"
 "    margin: 15px 0 15px 0;\n"
 "    border-radius: 0px;\n"
@@ -188,49 +189,47 @@ class Ui_MainWindow(object):
 "\n"
 "/*  HANDLE BAR VERTICAL */\n"
 "QScrollBar::handle:vertical {    \n"
-"    background-color: rgb(80, 80, 122);\n"
+"    background-color: rgb(120, 193, 207);\n"
 "    min-height: 30px;\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QScrollBar::handle:vertical:hover{    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color:  rgb(133, 216, 230);\n"
 "}\n"
 "QScrollBar::handle:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(112, 184, 195);\n"
 "}\n"
 "\n"
 "/* BTN TOP - SCROLLBAR */\n"
 "QScrollBar::sub-line:vertical {\n"
 "    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
+"    background-color:  rgb(183, 208, 213);\n"
 "    height: 15px;\n"
-"    border-top-left-radius: 7px;\n"
-"    border-top-right-radius: 7px;\n"
+"    border-radius: 7px;\n"
 "    subcontrol-position: top;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::sub-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color: rgb(164, 213, 209);\n"
 "}\n"
 "QScrollBar::sub-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(101, 183, 184);\n"
 "}\n"
 "\n"
 "/* BTN BOTTOM - SCROLLBAR */\n"
 "QScrollBar::add-line:vertical {\n"
 "    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
+"    background-color: rgb(183, 208, 213);\n"
 "    height: 15px;\n"
-"    border-bottom-left-radius: 7px;\n"
-"    border-bottom-right-radius: 7px;\n"
+"    border-radius: 7px;\n"
 "    subcontrol-position: bottom;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::add-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color: rgb(164, 213, 209);\n"
 "}\n"
 "QScrollBar::add-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(101, 183, 184);\n"
 "}\n"
 "\n"
 "/* RESET ARROW */\n"
@@ -299,17 +298,28 @@ class Ui_MainWindow(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_5.addWidget(self.label_5)
-        self.pushButton = QtWidgets.QPushButton(self.frame_6)
-        self.pushButton.setMaximumSize(QtCore.QSize(70, 70))
-        self.pushButton.setText("")
+        self.upd_realtime_button = QtWidgets.QPushButton(self.frame_6)
+        self.upd_realtime_button.setMaximumSize(QtCore.QSize(70, 70))
+        self.upd_realtime_button.setStyleSheet("QPushButton {\n"
+"               border-radius: 34;\n"
+"            }\n"
+"QPushButton:hover {\n"
+"                background-color: rgb(171, 213, 222);\n"
+"                border-radius: 34;\n"
+"            }\n"
+"QPushButton:pressed {\n"
+"                background-color: rgb(129, 209, 223);\n"
+"                border-radius: 34;\n"
+"            }")
+        self.upd_realtime_button.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/16x16/icons/exp upd btn.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton.setIcon(icon)
-        self.pushButton.setIconSize(QtCore.QSize(40, 40))
-        self.pushButton.setDefault(False)
-        self.pushButton.setFlat(True)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_5.addWidget(self.pushButton)
+        self.upd_realtime_button.setIcon(icon)
+        self.upd_realtime_button.setIconSize(QtCore.QSize(40, 40))
+        self.upd_realtime_button.setDefault(False)
+        self.upd_realtime_button.setFlat(True)
+        self.upd_realtime_button.setObjectName("upd_realtime_button")
+        self.horizontalLayout_5.addWidget(self.upd_realtime_button)
         self.verticalLayout_5.addWidget(self.frame_6)
         self.line_4 = QtWidgets.QFrame(self.notes_frame)
         self.line_4.setFrameShape(QtWidgets.QFrame.HLine)
@@ -333,7 +343,7 @@ class Ui_MainWindow(object):
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_8.addWidget(self.label_7)
         self.info_1 = QtWidgets.QLabel(self.frame_7)
-        self.info_1.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.info_1.setMaximumSize(QtCore.QSize(90, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(10)
@@ -363,7 +373,7 @@ class Ui_MainWindow(object):
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_9.addWidget(self.label_6)
         self.info_2 = QtWidgets.QLabel(self.frame_8)
-        self.info_2.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.info_2.setMaximumSize(QtCore.QSize(90, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(10)
@@ -393,7 +403,7 @@ class Ui_MainWindow(object):
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_10.addWidget(self.label_4)
         self.info_3 = QtWidgets.QLabel(self.frame_9)
-        self.info_3.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.info_3.setMaximumSize(QtCore.QSize(90, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(10)
@@ -423,7 +433,7 @@ class Ui_MainWindow(object):
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_6.addWidget(self.label_3)
         self.info_4 = QtWidgets.QLabel(self.frame_10)
-        self.info_4.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.info_4.setMaximumSize(QtCore.QSize(90, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(10)
@@ -453,7 +463,7 @@ class Ui_MainWindow(object):
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_7.addWidget(self.label_8)
         self.info_5 = QtWidgets.QLabel(self.frame_11)
-        self.info_5.setMaximumSize(QtCore.QSize(70, 16777215))
+        self.info_5.setMaximumSize(QtCore.QSize(90, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(10)
@@ -504,20 +514,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.frame_13)
         self.characters_view = QtWidgets.QListView(self.frame_12)
         self.characters_view.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.characters_view.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.characters_view.setObjectName("characters_view")
-        self.verticalLayout_9.addWidget(self.characters_view)
-        self.horizontalLayout_4.addWidget(self.frame_12)
-        self.stackedWidget.addWidget(self.page)
-        self.page_2 = QtWidgets.QWidget()
-        self.page_2.setObjectName("page_2")
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.page_2)
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.primos_view = QtWidgets.QListView(self.page_2)
-        self.primos_view.setStyleSheet(" QScrollBar:vertical {\n"
+        self.characters_view.setStyleSheet(" QScrollBar:vertical {\n"
 "    border: none;\n"
-"    background: rgb(45, 45, 68);\n"
+"    background: rgb(199, 227, 232);\n"
 "    width: 14px;\n"
 "    margin: 15px 0 15px 0;\n"
 "    border-radius: 0px;\n"
@@ -525,49 +524,173 @@ class Ui_MainWindow(object):
 "\n"
 "/*  HANDLE BAR VERTICAL */\n"
 "QScrollBar::handle:vertical {    \n"
-"    background-color: rgb(80, 80, 122);\n"
+"    background-color: rgb(120, 193, 207);\n"
 "    min-height: 30px;\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QScrollBar::handle:vertical:hover{    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color:  rgb(133, 216, 230);\n"
 "}\n"
 "QScrollBar::handle:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(112, 184, 195);\n"
 "}\n"
 "\n"
 "/* BTN TOP - SCROLLBAR */\n"
 "QScrollBar::sub-line:vertical {\n"
 "    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
+"    background-color:  rgb(183, 208, 213);\n"
 "    height: 15px;\n"
-"    border-top-left-radius: 7px;\n"
-"    border-top-right-radius: 7px;\n"
+"    border-radius: 7px;\n"
 "    subcontrol-position: top;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::sub-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color: rgb(164, 213, 209);\n"
 "}\n"
 "QScrollBar::sub-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(101, 183, 184);\n"
 "}\n"
 "\n"
 "/* BTN BOTTOM - SCROLLBAR */\n"
 "QScrollBar::add-line:vertical {\n"
 "    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
+"    background-color: rgb(183, 208, 213);\n"
 "    height: 15px;\n"
-"    border-bottom-left-radius: 7px;\n"
-"    border-bottom-right-radius: 7px;\n"
+"    border-radius: 7px;\n"
 "    subcontrol-position: bottom;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::add-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color: rgb(164, 213, 209);\n"
 "}\n"
 "QScrollBar::add-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(101, 183, 184);\n"
+"}\n"
+"\n"
+"/* RESET ARROW */\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"    background: none;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}")
+        self.characters_view.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.characters_view.setObjectName("characters_view")
+        self.verticalLayout_9.addWidget(self.characters_view)
+        self.horizontalLayout_4.addWidget(self.frame_12)
+        self.stackedWidget.addWidget(self.page)
+        self.page_2 = QtWidgets.QWidget()
+        self.page_2.setObjectName("page_2")
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout(self.page_2)
+        self.horizontalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.frame_17 = QtWidgets.QFrame(self.page_2)
+        self.frame_17.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_17.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_17.setObjectName("frame_17")
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.frame_17)
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.frame_18 = QtWidgets.QFrame(self.frame_17)
+        self.frame_18.setMinimumSize(QtCore.QSize(0, 100))
+        self.frame_18.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_18.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_18.setObjectName("frame_18")
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.frame_18)
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.label_10 = QtWidgets.QLabel(self.frame_18)
+        self.label_10.setMaximumSize(QtCore.QSize(83, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(12)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.horizontalLayout_13.addWidget(self.label_10)
+        self.line_6 = QtWidgets.QFrame(self.frame_18)
+        self.line_6.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_6.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_6.setObjectName("line_6")
+        self.horizontalLayout_13.addWidget(self.line_6)
+        self.label_11 = QtWidgets.QLabel(self.frame_18)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_11.sizePolicy().hasHeightForWidth())
+        self.label_11.setSizePolicy(sizePolicy)
+        self.label_11.setMinimumSize(QtCore.QSize(282, 0))
+        self.label_11.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(12)
+        self.label_11.setFont(font)
+        self.label_11.setObjectName("label_11")
+        self.horizontalLayout_13.addWidget(self.label_11)
+        self.line_7 = QtWidgets.QFrame(self.frame_18)
+        self.line_7.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_7.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_7.setObjectName("line_7")
+        self.horizontalLayout_13.addWidget(self.line_7)
+        self.label_12 = QtWidgets.QLabel(self.frame_18)
+        self.label_12.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(12)
+        self.label_12.setFont(font)
+        self.label_12.setObjectName("label_12")
+        self.horizontalLayout_13.addWidget(self.label_12)
+        self.verticalLayout_11.addWidget(self.frame_18)
+        self.primos_view = QtWidgets.QListView(self.frame_17)
+        self.primos_view.setStyleSheet(" QScrollBar:vertical {\n"
+"    border: none;\n"
+"    background: rgb(199, 227, 232);\n"
+"    width: 14px;\n"
+"    margin: 15px 0 15px 0;\n"
+"    border-radius: 0px;\n"
+" }\n"
+"\n"
+"/*  HANDLE BAR VERTICAL */\n"
+"QScrollBar::handle:vertical {    \n"
+"    background-color: rgb(120, 193, 207);\n"
+"    min-height: 30px;\n"
+"    border-radius: 7px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover{    \n"
+"    background-color:  rgb(133, 216, 230);\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed {    \n"
+"    background-color: rgb(112, 184, 195);\n"
+"}\n"
+"\n"
+"/* BTN TOP - SCROLLBAR */\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: none;\n"
+"    background-color:  rgb(183, 208, 213);\n"
+"    height: 15px;\n"
+"    border-radius: 7px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover {    \n"
+"    background-color: rgb(164, 213, 209);\n"
+"}\n"
+"QScrollBar::sub-line:vertical:pressed {    \n"
+"    background-color: rgb(101, 183, 184);\n"
+"}\n"
+"\n"
+"/* BTN BOTTOM - SCROLLBAR */\n"
+"QScrollBar::add-line:vertical {\n"
+"    border: none;\n"
+"    background-color: rgb(183, 208, 213);\n"
+"    height: 15px;\n"
+"    border-radius: 7px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover {    \n"
+"    background-color: rgb(164, 213, 209);\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed {    \n"
+"    background-color: rgb(101, 183, 184);\n"
 "}\n"
 "\n"
 "/* RESET ARROW */\n"
@@ -580,17 +703,108 @@ class Ui_MainWindow(object):
         self.primos_view.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.primos_view.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.primos_view.setObjectName("primos_view")
-        self.verticalLayout_6.addWidget(self.primos_view)
+        self.verticalLayout_11.addWidget(self.primos_view)
+        self.horizontalLayout_12.addWidget(self.frame_17)
+        self.frame_14 = QtWidgets.QFrame(self.page_2)
+        self.frame_14.setMinimumSize(QtCore.QSize(350, 0))
+        self.frame_14.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.frame_14.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_14.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_14.setObjectName("frame_14")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.frame_14)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6.setSpacing(7)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.prim_graphic_1 = PlotWidget(self.frame_14)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.prim_graphic_1.sizePolicy().hasHeightForWidth())
+        self.prim_graphic_1.setSizePolicy(sizePolicy)
+        self.prim_graphic_1.setMinimumSize(QtCore.QSize(0, 0))
+        self.prim_graphic_1.setStyleSheet("background-color: rgb(199, 227, 232);")
+        self.prim_graphic_1.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.prim_graphic_1.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.prim_graphic_1.setObjectName("prim_graphic_1")
+        self.verticalLayout_6.addWidget(self.prim_graphic_1)
+        self.prim_graphic_2 = PlotWidget(self.frame_14)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.prim_graphic_2.sizePolicy().hasHeightForWidth())
+        self.prim_graphic_2.setSizePolicy(sizePolicy)
+        self.prim_graphic_2.setStyleSheet("background-color: rgb(199, 227, 232);")
+        self.prim_graphic_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.prim_graphic_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.prim_graphic_2.setObjectName("prim_graphic_2")
+        self.verticalLayout_6.addWidget(self.prim_graphic_2)
+        self.horizontalLayout_12.addWidget(self.frame_14)
         self.stackedWidget.addWidget(self.page_2)
         self.page_5 = QtWidgets.QWidget()
         self.page_5.setObjectName("page_5")
-        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.page_5)
+        self.horizontalLayout_14 = QtWidgets.QHBoxLayout(self.page_5)
+        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_14.setObjectName("horizontalLayout_14")
+        self.frame_19 = QtWidgets.QFrame(self.page_5)
+        self.frame_19.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_19.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_19.setObjectName("frame_19")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.frame_19)
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.resins_view = QtWidgets.QListView(self.page_5)
+        self.frame_23 = QtWidgets.QFrame(self.frame_19)
+        self.frame_23.setMinimumSize(QtCore.QSize(0, 100))
+        self.frame_23.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_23.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_23.setObjectName("frame_23")
+        self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.frame_23)
+        self.horizontalLayout_17.setContentsMargins(9, 9, 9, 9)
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.label_19 = QtWidgets.QLabel(self.frame_23)
+        self.label_19.setMaximumSize(QtCore.QSize(83, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(12)
+        self.label_19.setFont(font)
+        self.label_19.setObjectName("label_19")
+        self.horizontalLayout_17.addWidget(self.label_19)
+        self.line_12 = QtWidgets.QFrame(self.frame_23)
+        self.line_12.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_12.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_12.setObjectName("line_12")
+        self.horizontalLayout_17.addWidget(self.line_12)
+        self.label_20 = QtWidgets.QLabel(self.frame_23)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_20.sizePolicy().hasHeightForWidth())
+        self.label_20.setSizePolicy(sizePolicy)
+        self.label_20.setMinimumSize(QtCore.QSize(282, 0))
+        self.label_20.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(12)
+        self.label_20.setFont(font)
+        self.label_20.setObjectName("label_20")
+        self.horizontalLayout_17.addWidget(self.label_20)
+        self.line_13 = QtWidgets.QFrame(self.frame_23)
+        self.line_13.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_13.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_13.setObjectName("line_13")
+        self.horizontalLayout_17.addWidget(self.line_13)
+        self.label_21 = QtWidgets.QLabel(self.frame_23)
+        self.label_21.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Georgia")
+        font.setPointSize(12)
+        self.label_21.setFont(font)
+        self.label_21.setObjectName("label_21")
+        self.horizontalLayout_17.addWidget(self.label_21)
+        self.verticalLayout_7.addWidget(self.frame_23)
+        self.resins_view = QtWidgets.QListView(self.frame_19)
         self.resins_view.setStyleSheet(" QScrollBar:vertical {\n"
 "    border: none;\n"
-"    background: rgb(45, 45, 68);\n"
+"    background: rgb(199, 227, 232);\n"
 "    width: 14px;\n"
 "    margin: 15px 0 15px 0;\n"
 "    border-radius: 0px;\n"
@@ -598,49 +812,47 @@ class Ui_MainWindow(object):
 "\n"
 "/*  HANDLE BAR VERTICAL */\n"
 "QScrollBar::handle:vertical {    \n"
-"    background-color: rgb(80, 80, 122);\n"
+"    background-color: rgb(120, 193, 207);\n"
 "    min-height: 30px;\n"
 "    border-radius: 7px;\n"
 "}\n"
 "QScrollBar::handle:vertical:hover{    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color:  rgb(133, 216, 230);\n"
 "}\n"
 "QScrollBar::handle:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(112, 184, 195);\n"
 "}\n"
 "\n"
 "/* BTN TOP - SCROLLBAR */\n"
 "QScrollBar::sub-line:vertical {\n"
 "    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
+"    background-color:  rgb(183, 208, 213);\n"
 "    height: 15px;\n"
-"    border-top-left-radius: 7px;\n"
-"    border-top-right-radius: 7px;\n"
+"    border-radius: 7px;\n"
 "    subcontrol-position: top;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::sub-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color: rgb(164, 213, 209);\n"
 "}\n"
 "QScrollBar::sub-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(101, 183, 184);\n"
 "}\n"
 "\n"
 "/* BTN BOTTOM - SCROLLBAR */\n"
 "QScrollBar::add-line:vertical {\n"
 "    border: none;\n"
-"    background-color: rgb(59, 59, 90);\n"
+"    background-color: rgb(183, 208, 213);\n"
 "    height: 15px;\n"
-"    border-bottom-left-radius: 7px;\n"
-"    border-bottom-right-radius: 7px;\n"
+"    border-radius: 7px;\n"
 "    subcontrol-position: bottom;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::add-line:vertical:hover {    \n"
-"    background-color: rgb(255, 0, 127);\n"
+"    background-color: rgb(164, 213, 209);\n"
 "}\n"
 "QScrollBar::add-line:vertical:pressed {    \n"
-"    background-color: rgb(185, 0, 92);\n"
+"    background-color: rgb(101, 183, 184);\n"
 "}\n"
 "\n"
 "/* RESET ARROW */\n"
@@ -650,8 +862,42 @@ class Ui_MainWindow(object):
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "    background: none;\n"
 "}")
+        self.resins_view.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.resins_view.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.resins_view.setObjectName("resins_view")
         self.verticalLayout_7.addWidget(self.resins_view)
+        self.horizontalLayout_14.addWidget(self.frame_19)
+        self.frame_20 = QtWidgets.QFrame(self.page_5)
+        self.frame_20.setMinimumSize(QtCore.QSize(350, 0))
+        self.frame_20.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_20.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_20.setObjectName("frame_20")
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.frame_20)
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.frame_21 = PlotWidget(self.frame_20)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_21.sizePolicy().hasHeightForWidth())
+        self.frame_21.setSizePolicy(sizePolicy)
+        self.frame_21.setStyleSheet("background-color: rgb(199, 227, 232);")
+        self.frame_21.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_21.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_21.setObjectName("frame_21")
+        self.verticalLayout_12.addWidget(self.frame_21)
+        self.frame_22 = PlotWidget(self.frame_20)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_22.sizePolicy().hasHeightForWidth())
+        self.frame_22.setSizePolicy(sizePolicy)
+        self.frame_22.setStyleSheet("background-color: rgb(199, 227, 232);")
+        self.frame_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_22.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_22.setObjectName("frame_22")
+        self.verticalLayout_12.addWidget(self.frame_22)
+        self.horizontalLayout_14.addWidget(self.frame_20)
         self.stackedWidget.addWidget(self.page_5)
         self.settings_page = QtWidgets.QWidget()
         self.settings_page.setObjectName("settings_page")
@@ -715,7 +961,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.mainbody)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 964, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 960, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -723,7 +969,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -738,9 +984,16 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Смола:"))
         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p>До полного<br/>восстановления:</p></body></html>"))
         self.label_9.setText(_translate("MainWindow", "Экспедиции"))
+        self.label_10.setText(_translate("MainWindow", "Кол-во:"))
+        self.label_11.setText(_translate("MainWindow", "За что:"))
+        self.label_12.setText(_translate("MainWindow", "Дата:"))
+        self.label_19.setText(_translate("MainWindow", "Кол-во:"))
+        self.label_20.setText(_translate("MainWindow", "За что:"))
+        self.label_21.setText(_translate("MainWindow", "Дата:"))
         self.label.setText(_translate("MainWindow", "Settings:"))
         self.settingsWarning.setText(_translate("MainWindow", "Проверьте введенные данные"))
         self.ltoken.setPlaceholderText(_translate("MainWindow", "ltoken"))
         self.ltuid.setPlaceholderText(_translate("MainWindow", "ltuid"))
         self.saveButton.setText(_translate("MainWindow", "Сохранить"))
+from pyqtgraph import PlotWidget
 import resourses_rc
