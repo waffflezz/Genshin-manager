@@ -241,11 +241,11 @@ if __name__ == '__main__':
 
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())
-    # analyzer = StatisticsAnalyzer()
-    #
-    # print('get_primos_per_month')
-    # pprint(analyzer.get_primos_per_month())
-    # print('\nget_primos_top')
-    # pprint(analyzer.get_primos_top())
-    # print('\nget_primo_top_by_day')
-    # pprint(analyzer.get_primo_top_by_day()[-5:])
+    analyzer = StatisticsAnalyzer()
+
+    print('get_primos_per_month')
+    pprint(analyzer.get_primos_per_month())
+    print('\nget_primos_top')
+    pprint(analyzer.get_primos_top())
+    print('\nget_primo_top_by_day')
+    pprint(analyzer.get_primo_top_by_day()[-5:])

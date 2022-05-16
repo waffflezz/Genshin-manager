@@ -113,5 +113,6 @@ class CharactersModel(ListModel):
         if type(data) != list:
             return
 
+        self.clear()
         for char in data:
             self.appendRow(char)

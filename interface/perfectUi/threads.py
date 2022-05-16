@@ -1,4 +1,5 @@
 from PyQt5.QtCore import QThread, pyqtSignal
+from api_response import realtime
 
 
 class LoadPrimos(QThread):
@@ -54,14 +55,18 @@ class LoadExpedition(QThread):
     characters_signal = pyqtSignal(object)
     load_signal = pyqtSignal(bool)
 
-    def __init__(self, exp, parent=None):
+    def __init__(self, parent=None):
         super(LoadExpedition, self).__init__(parent)
-        self.exp = exp
 
     def run(self):
         self.load_signal.emit(True)
 
-        self.notes_signal.emit(self.exp['info'])
-        self.characters_signal.emit(self.exp['characters'])
+        uid = 705359736
+        rus = 'ru-ru'
+
+        notes = realtime.grab_notes(uid, rus)
+
+        self.notes_signal.emit(notes['info'])
+        self.characters_signal.emit(notes['characters'])
 
         self.load_signal.emit(False)

@@ -1,3 +1,6 @@
+import datetime
+import time
+
 from PyQt5.QtWidgets import (
     QMainWindow, QApplication, QPushButton,
     QSizePolicy, QLabel, QFrame,
@@ -22,6 +25,9 @@ from api_response.db_worker import DBaser
 from interface.ui_cookie_dialog import CookieDialog
 from styles import style_bt_standard
 import ui
+
+import pyqtgraph as pg
+import numpy as np
 
 
 def select_menu(get_style):
@@ -48,6 +54,7 @@ class MainWindow(QMainWindow):
         self.db_manager.make_statistics_base()
 
         self.stats = statistics.StatisticsGetter("ru-ru")
+        self.analyzer = statistics.StatisticsAnalyzer('C:\\ProgramData\\Genshin_manager\\databases\\')
         # self.stats.update_dbs()
 
         self.err_message = ErrorMessage()
@@ -64,6 +71,7 @@ class MainWindow(QMainWindow):
 
         self.ui.settingsButton.clicked.connect(self.buttons_events)
         self.ui.saveButton.clicked.connect(self.buttons_events)
+        self.ui.upd_realtime_button.clicked.connect(self.buttons_events)
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.page)
 
@@ -115,12 +123,7 @@ class MainWindow(QMainWindow):
         self.dails.signal.connect(self.daily_model.add_dails)
         self.dails.load_signal.connect(self.loading)
 
-        uid = 705359736
-        rus = 'ru-ru'
-
-        notes = realtime.grab_notes(uid, rus)
-
-        self.expedition = LoadExpedition(notes)
+        self.expedition = LoadExpedition()
         self.expedition.notes_signal.connect(self.add_notes)
         self.expedition.characters_signal.connect(self.chars_model.add_characters)
         self.expedition.load_signal.connect(self.loading)
@@ -133,6 +136,16 @@ class MainWindow(QMainWindow):
 
         self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
         self.daily_model.add_dails(self.stats.get_dailys_page())
+
+        self.graph_pen = pg.mkPen(color=(255, 0, 0), width=2)
+
+        axis = pg.DateAxisItem()
+        self.ui.prim_graphic_1.setAxisItems({'bottom': axis})
+        self.ui.prim_graphic_1.setBackground((199, 227, 232))
+        self.ui.prim_graphic_1.setTitle("Primos per month")
+
+        self.ui.prim_graphic_2.setBackground((199, 227, 232))
+        self.ui.prim_graphic_2.setTitle("Primos top")
 
     def buttons_events(self):
         button = self.sender()
@@ -157,6 +170,17 @@ class MainWindow(QMainWindow):
             self.reset_style("primos_button")
             button.setStyleSheet(select_menu(button.styleSheet()))
 
+            self.ui.prim_graphic_1.clear()
+            self.ui.prim_graphic_2.clear()
+
+            self.ui.prim_graphic_1.plot(x=np.array([time.mktime(datetime.date(i[0], i[1], 1).timetuple()) for i in self.analyzer.get_primos_per_month().keys()]),
+                                        y=np.array([i for i in self.analyzer.get_primos_per_month().values()]),
+                                        pen=self.graph_pen)
+
+            self.ui.prim_graphic_2.plot(x=np.array([i + 1 for i in range(len(self.analyzer.get_primos_top()))]),
+                                        y=np.array([i['amount'] for i in self.analyzer.get_primos_top()]),
+                                        pen=self.graph_pen)
+
             self.primos.start()
         elif button.objectName() == "resin_button":
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_5)
@@ -175,6 +199,11 @@ class MainWindow(QMainWindow):
 
             if not self.ui.ltoken.text() or not self.ui.ltuid.text() or is_cookie() is False:
                 self.ui.settingsWarning.show()
+        elif button.objectName() == "upd_realtime_button":
+            if is_cookie() is False:
+                self.cookie_dialog.show()
+                return
+            self.expedition.start()
 
     def toggle_menu(self, max_width):
         width = self.ui.sidebar_menu.width()
@@ -219,28 +248,13 @@ class MainWindow(QMainWindow):
             if button.objectName() != widget and button.objectName() != "sidebarButton":
                 button.setStyleSheet(deselect_menu(button.styleSheet()))
 
-    # TODO: Доделать информацию в экспедициях
     def add_notes(self, notes):
-        self.ui.info_1.setText('3/3')
-        self.ui.info_2.setText('2/5')
-        self.ui.info_3.setText('5/100')
-        self.ui.info_4.setText('11/2')
-        self.ui.info_5.setText('yes')
-        self.ui.info_6.setText('5/5')
-
-    # # TODO: сделать отдельным методом в моделе вишесев
-    # def update_wishes(self, notes):
-    #     expedition_info = self.ui.scrollAreaWidgetContents.findChild(QLabel, "wishes_info")
-    #     expedition_info.setText("".join(i + "\n" for i in notes[:5]))
-    #
-    #     for i, note in enumerate(notes[5:]):
-    #         pix = QPixmap()
-    #         pix.loadFromData(b"".join(note[:-1]))
-    #         hero_pix = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"hero_pix_{i}")
-    #         hero_pix.setPixmap(pix)
-    #
-    #         expedition_time = self.ui.scrollAreaWidgetContents.findChild(QLabel, f"heroes_time_{i}")
-    #         expedition_time.setText(note[-1])
+        self.ui.info_1.setText(notes['dailik'].replace('\\', '/'))
+        self.ui.info_2.setText(notes['reward'])
+        self.ui.info_3.setText(notes['bosses'].replace('\\', '/'))
+        self.ui.info_4.setText(notes['resin']['amount'].replace('\\', '/')[:-1])
+        self.ui.info_5.setText(notes['resin']['time'])
+        self.ui.info_6.setText(notes['expedition'].replace('\\', '/'))
 
     def loading(self, is_load):
         if is_load:
