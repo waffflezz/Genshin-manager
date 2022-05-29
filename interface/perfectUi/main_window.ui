@@ -228,12 +228,12 @@
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-                background-image: url(:/16x16/icons/16x16/cil-menu.png);
+                background-image: url(:/menus/icons/button icons/settings.png);
                 background-position: left center;
                 background-repeat: no-repeat;
                 border: none;
 				color: rgb(33, 53, 57);
-                border-left: 22px solid rgb(120, 193, 207);
+                border-left: 14px solid rgb(120, 193, 207);
 	            background-color: rgb(120, 193, 207);
                 text-align: left;
                 padding-left: 45px;
@@ -244,7 +244,7 @@
                 background-position: left center;
                 background-repeat: no-repeat;
                 border: none;
-                border-left: 22px solid  rgb(120, 193, 207);
+                border-left: 14px solid  rgb(120, 193, 207);
                 border-right: 45px solid rgb(120, 193, 207);
                 background-color: rgb(120, 193, 207);
                 text-align: left;
@@ -253,12 +253,12 @@
             }
             QPushButton:hover {
 				background-color: rgb(109, 176, 188);
-                border-left: 22px solid rgb(109, 176, 188);
+                border-left: 14px solid rgb(109, 176, 188);
 				border-radius: 12px;
             }
             QPushButton:pressed {
 				background-color: rgb(129, 209, 223);
-                border-left: 22px solid rgb(129, 209, 223);
+                border-left: 14px solid rgb(129, 209, 223);
 				border-radius: 12px;
             }</string>
             </property>
@@ -1226,7 +1226,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   <widget class="QLabel" name="label_10">
                    <property name="maximumSize">
                     <size>
-                     <width>83</width>
+                     <width>81</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -1258,7 +1258,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>282</width>
+                     <width>280</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -1597,7 +1597,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>282</width>
+                     <width>280</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -1754,44 +1754,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
               <property name="bottomMargin">
                <number>0</number>
               </property>
-              <item>
-               <widget class="PlotWidget" name="frame_21">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(199, 227, 232);</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PlotWidget" name="frame_22">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(199, 227, 232);</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>
@@ -1933,7 +1895,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>960</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -1949,7 +1911,6 @@ QPushButton:pressed {
  </customwidgets>
  <resources>
   <include location="resourses.qrc"/>
-  <include location="../../../../.designer/backup/resourses.qrc"/>
  </resources>
  <connections/>
 </ui>

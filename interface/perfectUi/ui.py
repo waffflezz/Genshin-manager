@@ -109,12 +109,12 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.settingsButton.sizePolicy().hasHeightForWidth())
         self.settingsButton.setSizePolicy(sizePolicy)
         self.settingsButton.setStyleSheet("QPushButton {\n"
-"                background-image: url(:/16x16/icons/16x16/cil-menu.png);\n"
+"                background-image: url(:/menus/icons/button icons/settings.png);\n"
 "                background-position: left center;\n"
 "                background-repeat: no-repeat;\n"
 "                border: none;\n"
 "                color: rgb(33, 53, 57);\n"
-"                border-left: 22px solid rgb(120, 193, 207);\n"
+"                border-left: 14px solid rgb(120, 193, 207);\n"
 "                background-color: rgb(120, 193, 207);\n"
 "                text-align: left;\n"
 "                padding-left: 45px;\n"
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
 "                background-position: left center;\n"
 "                background-repeat: no-repeat;\n"
 "                border: none;\n"
-"                border-left: 22px solid  rgb(120, 193, 207);\n"
+"                border-left: 14px solid  rgb(120, 193, 207);\n"
 "                border-right: 45px solid rgb(120, 193, 207);\n"
 "                background-color: rgb(120, 193, 207);\n"
 "                text-align: left;\n"
@@ -134,12 +134,12 @@ class Ui_MainWindow(object):
 "            }\n"
 "            QPushButton:hover {\n"
 "                background-color: rgb(109, 176, 188);\n"
-"                border-left: 22px solid rgb(109, 176, 188);\n"
+"                border-left: 14px solid rgb(109, 176, 188);\n"
 "                border-radius: 12px;\n"
 "            }\n"
 "            QPushButton:pressed {\n"
 "                background-color: rgb(129, 209, 223);\n"
-"                border-left: 22px solid rgb(129, 209, 223);\n"
+"                border-left: 14px solid rgb(129, 209, 223);\n"
 "                border-radius: 12px;\n"
 "            }")
         self.settingsButton.setIconSize(QtCore.QSize(16, 16))
@@ -612,7 +612,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.frame_18)
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
         self.label_10 = QtWidgets.QLabel(self.frame_18)
-        self.label_10.setMaximumSize(QtCore.QSize(83, 16777215))
+        self.label_10.setMaximumSize(QtCore.QSize(81, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
         font.setPointSize(12)
@@ -630,7 +630,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_11.sizePolicy().hasHeightForWidth())
         self.label_11.setSizePolicy(sizePolicy)
-        self.label_11.setMinimumSize(QtCore.QSize(282, 0))
+        self.label_11.setMinimumSize(QtCore.QSize(280, 0))
         self.label_11.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
@@ -808,7 +808,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_20.sizePolicy().hasHeightForWidth())
         self.label_20.setSizePolicy(sizePolicy)
-        self.label_20.setMinimumSize(QtCore.QSize(282, 0))
+        self.label_20.setMinimumSize(QtCore.QSize(280, 0))
         self.label_20.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setFamily("Georgia")
@@ -907,28 +907,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.frame_20)
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
-        self.frame_21 = PlotWidget(self.frame_20)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_21.sizePolicy().hasHeightForWidth())
-        self.frame_21.setSizePolicy(sizePolicy)
-        self.frame_21.setStyleSheet("background-color: rgb(199, 227, 232);")
-        self.frame_21.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_21.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_21.setObjectName("frame_21")
-        self.verticalLayout_12.addWidget(self.frame_21)
-        self.frame_22 = PlotWidget(self.frame_20)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_22.sizePolicy().hasHeightForWidth())
-        self.frame_22.setSizePolicy(sizePolicy)
-        self.frame_22.setStyleSheet("background-color: rgb(199, 227, 232);")
-        self.frame_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_22.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_22.setObjectName("frame_22")
-        self.verticalLayout_12.addWidget(self.frame_22)
         self.horizontalLayout_14.addWidget(self.frame_20)
         self.stackedWidget.addWidget(self.page_5)
         self.settings_page = QtWidgets.QWidget()
@@ -993,7 +971,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.mainbody)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 960, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 960, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

@@ -61,12 +61,21 @@ class StatisticsGetter:
                 stat = gs.get_primogem_log(lang=self.lang, size=20, end_id=last_id)
             else:
                 raise 'Несуществующая причина обновления'
-
-            vals = list(filter(lambda x: x[1] not in list(map(lambda y: str(y[0]),
-                                                              self.baser.get_ids(self.cur, reason, 'trans_id'))),
-                               map(lambda field:
-                                   list(filtrate_dict(
-                                       field, 'amount', 'id', 'reason', 'time', 'uid').values()), stat)))
+            ids = self.baser.get_ids(self.cur, reason, 'trans_id')
+            vals = list(
+                filter(
+                    lambda x: x[1] not in list(
+                        map(
+                            lambda y: str(y[0]), ids
+                        )
+                    ),
+                    map(
+                        lambda field: list(
+                            filtrate_dict(field, 'amount', 'id', 'reason', 'time', 'uid').values()
+                        ), stat
+                    )
+                )
+            )
 
             if vals:
                 last_id = vals[-1][1]
@@ -100,6 +109,7 @@ class StatisticsGetter:
                 counter += len(vals)
             else:
                 break
+            counter += 1
         self.conn.commit()
         return f'artifacts db updated, added {counter} lines'
 
@@ -249,8 +259,8 @@ if __name__ == '__main__':
     from utils import set_cookie
 
     set_cookie()
-    # stats = StatisticsGetter('ru-ru', is_auto_update=False)
-    # pprint(stats.update_dbs())
+    stats = StatisticsGetter('ru-ru', is_auto_update=False)
+    pprint(stats.stat_db_update('primagems'))
 
     # print(stats.get_next_page('resin'))
     # print(stats.update_dbs())

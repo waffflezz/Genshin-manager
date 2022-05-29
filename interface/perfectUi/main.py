@@ -15,12 +15,14 @@ from threads import (
     LoadExpedition
 )
 
+from PyQt5.QtGui import QIcon
+
 from models import PrimosModel, DailsModel, CharactersModel
 from widgets import TestDelegate, DailsDelegate, CharactersDelegate
 from error_widget import ErrorMessage
 
 from sys import argv
-from api_response import realtime, statistics, is_cookie, set_cookie
+from api_response import statistics, is_cookie, set_cookie
 from api_response.db_worker import DBaser
 from interface.ui_cookie_dialog import CookieDialog
 from styles import style_bt_standard
@@ -64,10 +66,10 @@ class MainWindow(QMainWindow):
         self.ui.sidebarButton.setMinimumSize(QSize(0, 60))
         self.ui.sidebarButton.clicked.connect(lambda: self.toggle_menu(200))
 
-        self.add_new_menu("MAIN MENU", "main_menu", "url(:/16x16/icons/16x16/cil-code.png)")
-        self.add_new_menu("TRAVELER'S\nDIARIES", "exp_button", "url(:/16x16/icons/16x16/cil-code.png)")
-        self.add_new_menu("PRIMOS\nSTATS", "primos_button", "url(:/16x16/icons/16x16/cil-code.png)")
-        self.add_new_menu("RESIN\nSTATS", "resin_button", "url(:/16x16/icons/16x16/cil-code.png)")
+        self.add_new_menu("MAIN MENU", "main_menu", "url(:/menus/icons/button icons/menu.png)")
+        self.add_new_menu("TRAVELER'S\nDIARIES", "exp_button", "url(:/menus/icons/button icons/char.png)")
+        self.add_new_menu("PRIMOS\nSTATS", "primos_button", "url(:/menus/icons/button icons/primo.png)")
+        self.add_new_menu("RESIN\nSTATS", "resin_button", "url(:/menus/icons/button icons/resin.png)")
 
         self.ui.settingsButton.clicked.connect(self.buttons_events)
         self.ui.saveButton.clicked.connect(self.buttons_events)
