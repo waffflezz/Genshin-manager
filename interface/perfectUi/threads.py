@@ -66,6 +66,12 @@ class LoadExpedition(QThread):
         self.load_signal.emit(True)
 
         rus = 'ru-ru'
+        try:
+            int(self.uid)
+        except ValueError:
+            self.notes_signal.emit(False)
+            self.load_signal.emit(False)
+            return
 
         notes = realtime.grab_notes(int(self.uid), rus)
         if type(notes) != dict:
