@@ -18,6 +18,7 @@ from interface.perfectUi.models import PrimosModel, DailsModel, CharactersModel
 from interface.perfectUi.widgets import TestDelegate, DailsDelegate, CharactersDelegate
 from interface.perfectUi.error_widget import ErrorMessage
 
+import sys
 from sys import argv
 from api_response import statistics, is_cookie, set_cookie
 from api_response.db_worker import DBaser
