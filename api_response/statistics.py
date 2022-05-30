@@ -8,7 +8,8 @@ from api_response.utils import (test_workable,
                                 get_img_from_web,
                                 to_dict,
                                 str_to_datetime,
-                                sec_from_time)
+                                sec_from_time,
+                                get_active_uids)
 from api_response.db_worker import DBaser
 from sqlite3 import IntegrityError
 
@@ -159,6 +160,8 @@ class StatisticsAnalyzer:
         self.conn, self.cur = self.baser.get_connection('stats')
         self.cur.execute("""SELECT uid from primagems""")
         self.uids = self.baser.get_uids(self.cur)
+        if not self.uids:
+            self.uids = list(map(lambda x: x['uid'], get_active_uids()))
 
     @test_workable
     def get_primos_per_month(self, uid=None):

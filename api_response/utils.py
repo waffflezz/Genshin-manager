@@ -139,9 +139,10 @@ if __name__ == '__main__':
     from api_response.abyss import Abyss
 
     set_cookie()
-    uid = 705359736
-    rus = 'ru-ru'
-    eng = 'en-us'
-    set_cookie()
-    ab = Abyss(uid, rus)
-    pprint(translate_dict_keys(ab.get_abyss_stats(ab.pre_abyss)['stats'], ab.translate, rus))
+    print(get_active_uids())
+    # uid = 705359736
+    # rus = 'ru-ru'
+    # eng = 'en-us'
+    # set_cookie()
+    # ab = Abyss(uid, rus)
+    # pprint(translate_dict_keys(ab.get_abyss_stats(ab.pre_abyss)['stats'], ab.translate, rus))

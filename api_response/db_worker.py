@@ -82,11 +82,15 @@ class DBaser:
         conn.commit()
 
     # КОСТЫЛЬ
-    @api_response.utils.test_workable
+    # @api_response.utils.test_workable
     @staticmethod
     def get_uids(cur):
         cur.execute("""SELECT uid from primagems""")
-        uids = set(cur.fetchall()[0])
+        tmp_uids = cur.fetchall()
+        if tmp_uids:
+            uids = set(tmp_uids[0])
+        else:
+            return []
         cur.execute("""SELECT uid from artifacts""")
         uids.intersection(set(cur.fetchall()[0]))
         cur.execute("""SELECT uid from resin""")
