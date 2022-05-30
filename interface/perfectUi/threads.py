@@ -55,16 +55,23 @@ class LoadExpedition(QThread):
     characters_signal = pyqtSignal(object)
     load_signal = pyqtSignal(bool)
 
-    def __init__(self, parent=None):
+    def __init__(self, uid, parent=None):
         super(LoadExpedition, self).__init__(parent)
+        self.uid = uid
+
+    def set_uid(self, uid):
+        self.uid = uid
 
     def run(self):
         self.load_signal.emit(True)
 
-        uid = 705359736
         rus = 'ru-ru'
 
-        notes = realtime.grab_notes(uid, rus)
+        notes = realtime.grab_notes(int(self.uid), rus)
+        if type(notes) != dict:
+            self.notes_signal.emit(False)
+            self.load_signal.emit(False)
+            return
 
         self.notes_signal.emit(notes['info'])
         self.characters_signal.emit(notes['characters'])

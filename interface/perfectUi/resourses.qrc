@@ -2,6 +2,9 @@
   <qresource prefix="sidebar_button">
     <file>resourse/menu.png</file>
   </qresource>
+  <qresource prefix="window_icons">
+    <file>icons/mini_cookie.png</file>
+  </qresource>
   <qresource prefix="menus">
     <file>icons/button icons/char.png</file>
     <file>icons/button icons/menu.png</file>

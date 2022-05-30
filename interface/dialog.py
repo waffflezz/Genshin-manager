@@ -16,7 +16,7 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(316, 404)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/cookie_icon/mini_cookie.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/window_icons/icons/mini_cookie.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setModal(True)
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
@@ -90,6 +90,7 @@ class Ui_Dialog(object):
 "color: #FFFFFF;")
         self.faqButton.setObjectName("faqButton")
         self.label = QtWidgets.QLabel(self.frame)
+        self.label.setEnabled(True)
         self.label.setGeometry(QtCore.QRect(50, 240, 221, 31))
         font = QtGui.QFont()
         font.setFamily("Cascadia Mono")
@@ -111,4 +112,4 @@ class Ui_Dialog(object):
         self.okButton.setText(_translate("Dialog", "Ок"))
         self.faqButton.setText(_translate("Dialog", "Проблемы?"))
         self.label.setText(_translate("Dialog", "Проверьте введенные данные"))
-#import icons_rc
+import resourses_rc

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,8 +17,8 @@
    <string>Cookie</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/cookie_icon/mini_cookie.png</normaloff>:/cookie_icon/mini_cookie.png</iconset>
+   <iconset resource="perfectUi/resourses.qrc">
+    <normaloff>:/window_icons/icons/mini_cookie.png</normaloff>:/window_icons/icons/mini_cookie.png</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -36,7 +39,9 @@
    <item>
     <widget class="QFrame" name="frame">
      <property name="styleSheet">
-      <string notr="true">background: #C4C4C4;</string>
+      <string notr="true">/*background: #C4C4C4;
+*/
+background: rgb(210, 232, 232);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -223,7 +228,7 @@ color: #FFFFFF;</string>
   </layout>
  </widget>
  <resources>
-  <include location="resourse/icons.qrc"/>
+  <include location="perfectUi/resourses.qrc"/>
  </resources>
  <connections/>
 </ui>

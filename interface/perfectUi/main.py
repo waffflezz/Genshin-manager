@@ -15,8 +15,6 @@ from threads import (
     LoadExpedition
 )
 
-from PyQt5.QtGui import QIcon
-
 from models import PrimosModel, DailsModel, CharactersModel
 from widgets import TestDelegate, DailsDelegate, CharactersDelegate
 from error_widget import ErrorMessage
@@ -25,6 +23,7 @@ from sys import argv
 from api_response import statistics, is_cookie, set_cookie
 from api_response.db_worker import DBaser
 from interface.ui_cookie_dialog import CookieDialog
+from interface.uid_dialog import UidDialog
 from styles import style_bt_standard
 import ui
 
@@ -57,7 +56,7 @@ class MainWindow(QMainWindow):
 
         self.stats = statistics.StatisticsGetter("ru-ru")
         self.analyzer = statistics.StatisticsAnalyzer('C:\\ProgramData\\Genshin_manager\\databases\\')
-        # self.stats.update_dbs()
+        self.stats.update_dbs()
 
         self.err_message = ErrorMessage()
 
@@ -125,7 +124,9 @@ class MainWindow(QMainWindow):
         self.dails.signal.connect(self.daily_model.add_dails)
         self.dails.load_signal.connect(self.loading)
 
-        self.expedition = LoadExpedition()
+        self.uid_dialog = UidDialog()
+
+        self.expedition = LoadExpedition(self.uid_dialog.get_uid())
         self.expedition.notes_signal.connect(self.add_notes)
         self.expedition.characters_signal.connect(self.chars_model.add_characters)
         self.expedition.load_signal.connect(self.loading)
@@ -160,7 +161,9 @@ class MainWindow(QMainWindow):
             if is_cookie() is False:
                 self.cookie_dialog.show()
                 return
+
             self.expedition.start()
+
         elif button.objectName() == "main_menu":
             self.ui.stackedWidget.setCurrentWidget(self.ui.main_page)
             self.reset_style("main_menu")
@@ -205,6 +208,7 @@ class MainWindow(QMainWindow):
             if is_cookie() is False:
                 self.cookie_dialog.show()
                 return
+
             self.expedition.start()
 
     def toggle_menu(self, max_width):
@@ -251,6 +255,11 @@ class MainWindow(QMainWindow):
                 button.setStyleSheet(deselect_menu(button.styleSheet()))
 
     def add_notes(self, notes):
+        if notes is False:
+            self.uid_dialog.show()
+            self.expedition.set_uid(self.uid_dialog.get_uid())
+            return
+
         self.ui.info_1.setText(notes['dailik'].replace('\\', '/'))
         self.ui.info_2.setText(notes['reward'])
         self.ui.info_3.setText(notes['bosses'].replace('\\', '/'))
