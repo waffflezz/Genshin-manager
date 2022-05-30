@@ -3,29 +3,28 @@ import time
 
 from PyQt5.QtWidgets import (
     QMainWindow, QApplication, QPushButton,
-    QSizePolicy, QLabel, QFrame,
-    QHBoxLayout, QSpacerItem
+    QSizePolicy
 )
 from PyQt5.QtCore import (
     QPropertyAnimation, QEasingCurve, QSize,
-    Qt, QThread, pyqtSignal
+    Qt
 )
-from threads import (
+from interface.perfectUi.threads import (
     LoadPrimos, LoadResin, LoadDails,
     LoadExpedition
 )
 
-from models import PrimosModel, DailsModel, CharactersModel
-from widgets import TestDelegate, DailsDelegate, CharactersDelegate
-from error_widget import ErrorMessage
+from interface.perfectUi.models import PrimosModel, DailsModel, CharactersModel
+from interface.perfectUi.widgets import TestDelegate, DailsDelegate, CharactersDelegate
+from interface.perfectUi.error_widget import ErrorMessage
 
 from sys import argv
 from api_response import statistics, is_cookie, set_cookie
 from api_response.db_worker import DBaser
 from interface.ui_cookie_dialog import CookieDialog
 from interface.uid_dialog import UidDialog
-from styles import style_bt_standard
-import ui
+from interface.perfectUi.styles import style_bt_standard
+from interface.perfectUi import ui
 
 import pyqtgraph as pg
 import numpy as np
@@ -150,6 +149,14 @@ class MainWindow(QMainWindow):
         self.ui.prim_graphic_2.setBackground((199, 227, 232))
         self.ui.prim_graphic_2.setTitle("Primos top")
 
+        self.show_settings()
+
+    def show_settings(self):
+        self.ui.y_uid.setText(f"UID: {self.uid_dialog.get_uid()}")
+        ltoken, ltuid = self.cookie_dialog.get_lt()
+        self.ui.y_ltoken.setText(f"ltoken: {ltoken}")
+        self.ui.y_ltuid.setText(f"ltuid: {ltuid}")
+
     def buttons_events(self):
         button = self.sender()
 
@@ -204,6 +211,8 @@ class MainWindow(QMainWindow):
 
             if not self.ui.ltoken.text() or not self.ui.ltuid.text() or is_cookie() is False:
                 self.ui.settingsWarning.show()
+
+            self.show_settings()
         elif button.objectName() == "upd_realtime_button":
             if is_cookie() is False:
                 self.cookie_dialog.show()
@@ -280,4 +289,4 @@ if __name__ == '__main__':
     ex.show()
     app.exec_()
 
-    exit()
+    sys.exit()

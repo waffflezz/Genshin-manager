@@ -306,7 +306,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>3</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="main_page">
           <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1770,8 +1770,130 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
               </font>
              </property>
              <property name="text">
-              <string>Settings:</string>
+              <string>Настройки:</string>
              </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignLeft">
+            <widget class="QFrame" name="frame_15">
+             <property name="minimumSize">
+              <size>
+               <width>300</width>
+               <height>120</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(120, 193, 207);
+border-radius: 10px;</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_16">
+              <item alignment="Qt::AlignTop">
+               <widget class="QLabel" name="label_15">
+                <property name="font">
+                 <font>
+                  <family>Cascadia Mono</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Ваши данные:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_24">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(124, 200, 213);
+border-radius: 10px;</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QLabel" name="y_uid">
+                   <property name="font">
+                    <font>
+                     <family>Cascadia Mono</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>UID:</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_22">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(124, 200, 213);
+border-radius: 10px;</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <item>
+                  <widget class="QLabel" name="y_ltoken">
+                   <property name="font">
+                    <font>
+                     <family>Cascadia Mono</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>ltoken</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_21">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(124, 200, 213);
+border-radius: 10px;</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QLabel" name="y_ltuid">
+                   <property name="font">
+                    <font>
+                     <family>Cascadia Mono</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>ltuid</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
@@ -1788,65 +1910,84 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="settingsWarning">
-             <property name="font">
-              <font>
-               <family>Cascadia Mono</family>
-               <pointsize>12</pointsize>
-              </font>
+            <widget class="QFrame" name="frame_16">
+             <property name="minimumSize">
+              <size>
+               <width>300</width>
+               <height>0</height>
+              </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(222, 83, 86);</string>
+              <string notr="true">background-color: rgb(120, 193, 207);
+border-radius: 10px;</string>
              </property>
-             <property name="text">
-              <string>Проверьте введенные данные</string>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="ltoken">
-             <property name="styleSheet">
-              <string notr="true">background: #FFFFFF;
+             <layout class="QVBoxLayout" name="verticalLayout_15">
+              <item>
+               <widget class="QLabel" name="settingsWarning">
+                <property name="font">
+                 <font>
+                  <family>Cascadia Mono</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(222, 83, 86);</string>
+                </property>
+                <property name="text">
+                 <string>Проверьте введенные данные</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="ltoken">
+                <property name="styleSheet">
+                 <string notr="true">background: #FFFFFF;
 border-radius: 6px;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="placeholderText">
-              <string>ltoken</string>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="ltuid">
-             <property name="styleSheet">
-              <string notr="true">background: #FFFFFF;
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="placeholderText">
+                 <string>ltoken</string>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="ltuid">
+                <property name="styleSheet">
+                 <string notr="true">background: #FFFFFF;
 border-radius: 6px;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="placeholderText">
-              <string>ltuid</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="saveButton">
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="placeholderText">
+                 <string>ltuid</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="saveButton">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
 background: #FFFFFF;
 border-radius: 6px;
 
@@ -1861,10 +2002,13 @@ QPushButton:pressed {
     
 	background-color: rgb(45, 174, 221);
 }</string>
-             </property>
-             <property name="text">
-              <string>Сохранить</string>
-             </property>
+                </property>
+                <property name="text">
+                 <string>Сохранить</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
@@ -1895,7 +2039,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>960</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -1911,6 +2055,7 @@ QPushButton:pressed {
  </customwidgets>
  <resources>
   <include location="resourses.qrc"/>
+  <include location="../../../../.designer/backup/resourses.qrc"/>
  </resources>
  <connections/>
 </ui>

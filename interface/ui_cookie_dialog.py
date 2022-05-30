@@ -14,6 +14,22 @@ class CookieDialog(QDialog):
 
         self.ui.okButton.clicked.connect(self.save_cookie)
 
+    @staticmethod
+    def get_lt():
+        ltoken, ltuid = None, None
+
+
+        try:
+            with open('C:\\ProgramData\\Genshin_manager\\cookie.txt', "r") as f:
+                ltoken = f.readline()
+                ltuid = f.readline()
+        except FileNotFoundError as e:
+            print(e)
+            with open('C:\\ProgramData\\Genshin_manager\\uid.txt', "w"):
+                pass
+
+        return ltoken, ltuid
+
     def save_cookie(self):
         with open('C:\\ProgramData\\Genshin_manager\\cookie.txt', "w") as f:
             f.write(self.ui.ltokenEdit.text() + "\n")

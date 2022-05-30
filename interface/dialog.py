@@ -112,4 +112,4 @@ class Ui_Dialog(object):
         self.okButton.setText(_translate("Dialog", "Ок"))
         self.faqButton.setText(_translate("Dialog", "Проблемы?"))
         self.label.setText(_translate("Dialog", "Проверьте введенные данные"))
-import resourses_rc
+import interface.perfectUi.resourses_rc
