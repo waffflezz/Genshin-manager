@@ -11,10 +11,21 @@ from urllib.request import urlopen
 
 
 def set_cookie(path='C:\\ProgramData\\Genshin_manager\\cookie.txt'):
-    with open(path) as cook:
-        ltoken = cook.readline().replace('\n', '')
-        ltuid = cook.readline().replace('\n', '')
-        gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
+    if not os.path.exists('C:\\ProgramData\\Genshin_manager'):
+        os.makedirs('C:\\ProgramData\\Genshin_manager')
+
+    try:
+        with open(path) as cook:
+            ltoken = cook.readline().replace('\n', '')
+            ltuid = cook.readline().replace('\n', '')
+            gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
+    except FileNotFoundError as e:
+        with open(path, "w"):
+            pass
+        with open(path) as cook:
+            ltoken = cook.readline().replace('\n', '')
+            ltuid = cook.readline().replace('\n', '')
+            gs.set_cookie(ltuid=ltuid, ltoken=ltoken)
 
 
 def timer(func):
