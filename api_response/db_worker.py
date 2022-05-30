@@ -3,6 +3,8 @@ import os
 from pprint import pprint
 import sqlite3 as sql
 
+import api_response.utils
+
 
 class DBaser:
     def __init__(self, storage: str, is_auto_make=True):
@@ -79,6 +81,8 @@ class DBaser:
                     """)
         conn.commit()
 
+    # КОСТЫЛЬ
+    @api_response.utils.test_workable
     @staticmethod
     def get_uids(cur):
         cur.execute("""SELECT uid from primagems""")
