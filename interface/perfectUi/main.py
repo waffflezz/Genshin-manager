@@ -22,6 +22,7 @@ import sys
 from sys import argv
 from api_response import statistics, is_cookie, set_cookie
 from api_response.db_worker import DBaser
+from api_response.utils import get_active_uids
 from interface.ui_cookie_dialog import CookieDialog
 from interface.uid_dialog import UidDialog
 from interface.perfectUi.styles import style_bt_standard
@@ -126,7 +127,7 @@ class MainWindow(QMainWindow):
 
         self.uid_dialog = UidDialog()
 
-        self.expedition = LoadExpedition(self.uid_dialog.get_uid())
+        self.expedition = LoadExpedition(get_active_uids()[0]['uid'])
         self.expedition.notes_signal.connect(self.add_notes)
         self.expedition.characters_signal.connect(self.chars_model.add_characters)
         self.expedition.load_signal.connect(self.loading)
@@ -153,7 +154,7 @@ class MainWindow(QMainWindow):
         self.show_settings()
 
     def show_settings(self):
-        self.ui.y_uid.setText(f"UID: {self.uid_dialog.get_uid()}")
+        self.ui.y_uid.setText(f"UID: {get_active_uids()[0]['uid']}")
         ltoken, ltuid = self.cookie_dialog.get_lt()
         self.ui.y_ltoken.setText(f"ltoken: {ltoken}")
         self.ui.y_ltuid.setText(f"ltuid: {ltuid}")
